@@ -250,6 +250,11 @@ pywin32==223; sys_platform == 'win32' and python_version == '3.7'
 tornado==4.0; python_version <= '2.7'
 tornado==5.0; python_version >= '3.5'
 
+# Package dependency management tools (not used by any make rules)
+pipdeptree==2.0.0
+pip-check-reqs==2.0.4
+
+
 # Other indirect dependencies (not in any requirements file):
 
 alabaster==0.7.9
