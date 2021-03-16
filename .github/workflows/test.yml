@@ -194,7 +194,7 @@ jobs:
     - name: Run test
       env:
         PACKAGE_LEVEL: ${{ matrix.package_level }}
-        # TESTCASES: test_cim_obj.py
+        # TESTCASES: a value for pytest -k
       run: |
         make test
     - name: Send coverage result to coveralls.io

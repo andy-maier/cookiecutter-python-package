@@ -29,11 +29,11 @@ def import_installed(module_name):
         when a module directory exists in the current directory. This can be
         used for testing an OS-installed version of the module.
 
-    Example usage, e.g. in a pywbem test program::
+    Example usage, e.g. in a {{ cookiecutter.package_name }} test program::
 
         from ...utils import import_installed
-        pywbem = import_installed('pywbem')  # pylint: disable=invalid-name
-        from pywbem import ...
+        {{ cookiecutter.package_name }} = import_installed('{{ cookiecutter.package_name }}')  # pylint: disable=invalid-name
+        from {{ cookiecutter.package_name }} import ...
 
     The number of dots in `from ..utils` depends on where the test program
     containing this code is located, relative to the tests/utils.py file.
