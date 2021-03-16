@@ -29,10 +29,10 @@ TBD
 Supported environments
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Pywbem is supported in these environments:
+{{ cookiecutter.project_name }} is supported in these environments:
 
 * Operating Systems: Linux, Windows (native, and with UNIX-like environments),
-  OS-X
+  macOS/OS-X
 
 * Python: 2.7, 3.4, and higher
 
