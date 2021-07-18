@@ -16,6 +16,9 @@ Released: not yet
 
 **Bug fixes:**
 
+* Fixed a dependency error that caused importlib-metadata to be installed on
+  Python 3.8, while it is included in the Python base.
+
 **Enhancements:**
 
 **Cleanup:**
