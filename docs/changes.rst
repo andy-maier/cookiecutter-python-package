@@ -19,6 +19,8 @@ Released: not yet
 * Fixed a dependency error that caused importlib-metadata to be installed on
   Python 3.8, while it is included in the Python base.
 
+* Fixed TypeError when running Sphinx due to using docutils 0.18 on Python 2.7.
+
 **Enhancements:**
 
 **Cleanup:**
