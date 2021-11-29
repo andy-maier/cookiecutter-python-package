@@ -21,6 +21,8 @@ Released: not yet
 
 * Fixed TypeError when running Sphinx due to using docutils 0.18 on Python 2.7.
 
+* Fixed error when installing virtualenv in install test on Python 2.7.
+
 **Enhancements:**
 
 **Cleanup:**
