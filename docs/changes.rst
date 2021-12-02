@@ -25,6 +25,9 @@ Released: not yet
 
 **Enhancements:**
 
+* Support for Python 3.10: Added Python 3.10 in GitHub Actions tests, and in
+  package metadata.
+
 **Cleanup:**
 
 **Known issues:**

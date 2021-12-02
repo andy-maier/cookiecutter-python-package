@@ -67,15 +67,16 @@
 # For the base packages, we use the versions from Ubuntu 18.04 as a general
 # minimum, and then increase it to the first version that introduced support
 # for a particular Python version.
-# On pypy3 (py36), pip 18.0 is needed to support constraints like cffi!=1.11.3,>=1.8
+# pip 18.0 is needed on pypy3 (py36) to support constraints like cffi!=1.11.3,>=1.8.
 # pip 10.0.0 introduced the --exclude-editable option.
+# Pip 20.2 introduced a new resolver whose backtracking had issues that were resolved only in 21.2.2.
+# pip>=21.0 is needed for the cryptography package on Windows on GitHub Actions.
 pip==10.0.1; python_version <= '3.5'
-pip==18.0; python_version == '3.6'
-pip==18.1; python_version == '3.7'
-pip==19.3.1; python_version >= '3.8'
+pip==21.2.2; python_version >= '3.6'
 setuptools==39.0.1; python_version <= '3.6'
 setuptools==40.6.0; python_version == '3.7'
-setuptools==41.5.0; python_version >= '3.8'
+setuptools==41.5.0; python_version >= '3.8' and python_version <= '3.9'
+setuptools==49.0.0; python_version >= '3.10'
 wheel==0.30.0; python_version <= '3.6'
 wheel==0.32.0; python_version == '3.7'
 wheel==0.33.5; python_version >= '3.8'
@@ -99,7 +100,8 @@ wheel==0.33.5; python_version >= '3.8'
 # pytest 5.0.0 has removed support for Python < 3.5
 # pytest 4.3.1 solves an issue on Python 3 with minimum package levels
 pytest==4.3.1; python_version <= '3.6'
-pytest==4.4.0; python_version >= '3.7'
+pytest==4.4.0; python_version >= '3.7' and python_version <= '3.9'
+pytest==6.2.5; python_version >= '3.10'
 testfixtures==6.9.0
 decorator==4.0.11
 mock==2.0.0
@@ -135,6 +137,16 @@ pathlib2==2.3.3; python_version < '3.4' and sys_platform != 'win32'
 
 # Direct dependencies for development (must be consistent with dev-requirements.txt)
 
+# FormEncode is used for xml comparisons in unit test
+FormEncode==1.3.1; python_version <= '3.9'
+FormEncode==2.0.0; python_version >= '3.10'
+
+# Lxml
+lxml==4.6.2; python_version == '2.7'
+lxml==4.2.4; python_version == '3.4'
+lxml==4.6.2; python_version >= '3.5' and python_version <= '3.9'
+lxml==4.6.4; python_version >= '3.10'
+
 # Coverage reporting (no imports, invoked via coveralls script):
 # We exclude Python 3.4 from coverage testing and reporting.
 coverage==5.0; python_version == '2.7' or python_version >= '3.5'
@@ -157,18 +169,23 @@ PyYAML==5.3.1; python_version >= '3.5'
 tox==2.5.0
 # tox 3.17 requires six>=1.14.0
 # tox 3.14 requires importlib-metadata<1,>=0.12 on py<3.8
-importlib-metadata==0.12; python_version < '3.8'
+importlib-metadata==0.12; python_version <= '3.7'
 
 # Sphinx (no imports, invoked via sphinx-build script):
 Sphinx==1.7.6; python_version <= '3.4'
-Sphinx==3.5.4; python_version >= '3.5'
-docutils==0.13.1
+Sphinx==3.5.4; python_version >= '3.5' and python_version <= '3.9'
+Sphinx==4.2.0; python_version >= '3.10'
+docutils==0.13.1; python_version == '2.7'
+docutils==0.13.1; python_version >= '3.4' and python_version <= '3.9'
+docutils==0.14; python_version >= '3.10'
 sphinx-git==10.1.1
 GitPython==2.1.1
 sphinxcontrib-fulltoc==1.2.0
 sphinxcontrib-websupport==1.1.2
 Pygments==2.1.3
-autodocsumm==0.1.13
+sphinx-rtd-theme==0.5.0
+autodocsumm==0.1.13; python_version <= '3.9'
+autodocsumm==0.2.5; python_version >= '3.10'
 
 # PyLint (no imports, invoked via pylint script) - does not support py3:
 pylint==1.6.4; python_version == '2.7'
@@ -226,7 +243,8 @@ pyinstrument-cext==0.2.0  # from pyinstrument
 # Indirect dependencies with special constraints:
 
 # pytz (used by TBD)
-pytz==2016.10
+pytz==2016.10; python_version <= '3.9'
+pytz==2019.1; python_version >= '3.10'
 
 # colorama (used by TBD)
 # colorama 0.4.0 removed support for Python 3.4
@@ -265,7 +283,7 @@ appnope==0.1.0
 args==0.1.0
 atomicwrites==1.2.1; python_version == '2.7'
 attrs==18.2.0
-Babel==2.3.4
+Babel==2.7.0
 backports-abc==0.5
 backports.functools-lru-cache==1.5; python_version < '3.3'
 backports.shutil-get-terminal-size==1.0.0
@@ -294,11 +312,12 @@ idna==2.5
 imagesize==0.7.1
 importlib-metadata==0.12; python_version <= '3.7'
 isort==4.2.15
-Jinja2==2.8
-jsonschema==2.5.1
+Jinja2==2.8; python_version <= '3.9'
+Jinja2==2.10.2; python_version >= '3.10'
+jsonschema==2.6.0
 keyring==17.0.0; python_version >= '3.4'
 linecache2==1.0.0
-MarkupSafe==0.23
+MarkupSafe==1.1.0
 mistune==0.8.1
 more-itertools==5.0.0
 ordereddict==1.1
@@ -316,7 +335,8 @@ python-dateutil==2.6.0; python_version >= '3.4'
 pyzmq==16.0.4; python_version >= '3.4'
 qtconsole==4.2.1
 requests==2.20.1
-requests-toolbelt==0.7.0
+requests-mock==1.6.0
+requests-toolbelt==0.8.0
 rfc3986==1.3.0; python_version >= '3.4'
 scandir==1.9.0; python_version == '2.7'
 sh==1.12.14
