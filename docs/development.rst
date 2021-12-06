@@ -603,8 +603,8 @@ Git repo.
 
     .. code-block:: rst
 
-        Version M.N.U.dev1
-        ^^^^^^^^^^^^^^^^^^
+        {{ cookiecutter.package_name }} M.N.U.dev1
+        ----------------------------
 
         This version contains all fixes up to version M.N-1.x.
 
