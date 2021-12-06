@@ -27,8 +27,10 @@ safety>=1.8.7,<1.9.0; python_version <= '3.4'
 safety>=1.9.0; python_version >= '3.5'
 # dparse 0.5.0 has an infinite recursion issue on Python 2.7,
 #   see https://github.com/pyupio/dparse/issues/46
+# Pip 19.1.1 does not recognize that dparse 0.5.0 has dropped support for Python 3.4
 dparse>=0.4.1,<0.5.0; python_version == '2.7'
-dparse>=0.4.1; python_version >= '3.4'
+dparse>=0.4.1,<0.5.0; python_version == '3.4'
+dparse>=0.5.1; python_version >= '3.5'
 
 # PyYAML is pulled in by dparse and python-coveralls
 # PyYAML 5.3 has removed support for Python 3.4
@@ -108,19 +110,29 @@ lazy-object-proxy>=1.4.3; python_version >= '3.6'
 # Flake8 and dependents (no imports, invoked via flake8 script):
 # flake8 3.9.0 has removed support for py34 and pip 19.1.1 on py34 does not deal
 # well with its pinned dependencies, so we need to repeat these for py34.
+# flake8 4.0.0 fixes an AttributeError on Python 3.10.
+flake8>=3.8.0; python_version == '2.7'
 flake8>=3.8.0,<3.9.0; python_version == '3.4'
+flake8>=3.8.0; python_version >= '3.5' and python_version <= '3.9'
+flake8>=4.0.0; python_version >= '3.10'
+mccabe>=0.6.0; python_version == '2.7'
 mccabe>=0.6.0,<0.7.0; python_version == '3.4'
+mccabe>=0.6.0; python_version >= '3.5'
+pycodestyle>=2.6.0,<2.8.0; python_version == '2.7'
 pycodestyle>=2.6.0a1,<2.7.0; python_version == '3.4'
+pycodestyle>=2.6.0; python_version >= '3.5' and python_version <= '3.9'
+pycodestyle>=2.8.0; python_version >= '3.10'
+pyflakes>=2.2.0,<2.4.0; python_version == '2.7'
 pyflakes>=2.2.0,<2.3.0; python_version == '3.4'
-flake8>=3.8.0; python_version != '3.4'
-mccabe>=0.6.0; python_version != '3.4'
-pycodestyle>=2.6.0; python_version != '3.4'
-pyflakes>=2.2.0; python_version != '3.4'
+pyflakes>=2.2.0; python_version >= '3.5' and python_version <= '3.9'
+pyflakes>=2.4.0; python_version >= '3.10'
 entrypoints>=0.3.0
 functools32>=3.2.3.post2; python_version == '2.7'  # technically: python_version < '3.2'
 
 # Twine (no imports, invoked via twine script):
-twine>=1.8.1
+# twine 2.0.0 removed support for Python < 3.6
+twine>=1.8.1,<2.0.0; python_version <= '3.5'
+twine>=3.0.0; python_version >= '3.6'
 # readme-renderer 25.0 has removed support for Python 3.4
 # readme-renderer 23.0 has made cmarkgfm part of extras (it fails on Cygwin)
 readme-renderer>=23.0; python_version == '2.7'
@@ -171,17 +183,20 @@ colorama>=0.3.9,<0.4.0; python_version <= '3.4'
 colorama>=0.4.0; python_version >= '3.5'
 
 # Pywin32 is used (at least?) by jupyter.
-# Pywin32 version 226 needs to be excluded, see issue #1946.
-# Pywin32 version 222 is inconsistent in its 32-bit/64-bit support on py37
-# Pywin32 version 225+ provides wheel files for py38, but does not advertise
-# py38 on Pypi. That causes pywin32==225 to fail but pywin32>=225 to work.
 # There is no version of pywin32 for py34.
+# Pywin32 version 222 is inconsistent in its 32-bit/64-bit support on py37
+# Pywin32 version 226 needs to be excluded, see issues #1946 and #1975.
+# Issue #2675: Pywin32 version 225+ provides wheel files for py38, but does not
+#   advertise py38 on Pypi. That causes pywin32==225 to fail but pywin32>=225
+#   to work.
+#   Reported to pywin32 as https://github.com/mhammond/pywin32/issues/1448.
+#   Addressed by increasing the minimum version of pywin32 to >=227 on Python >=3.8.
+# TODO: To circumvent https://github.com/pypa/pip/issues/10701, we exclude
+#       py3.10. Remove the circumvention once fixed.
 pywin32>=222,!=226; sys_platform == 'win32' and python_version == '2.7'
 pywin32>=222,!=226; sys_platform == 'win32' and python_version >= '3.5' and python_version <= '3.6'
 pywin32>=223,!=226; sys_platform == 'win32' and python_version == '3.7'
-# TODO: Re-enable once pywin32 fixes its Python version advertising on Pypi
-#       (see issue #1975).
-# pywin32>=225,!=226; sys_platform == 'win32' and python_version >= '3.8'
+pywin32>=227; sys_platform == 'win32' and python_version >= '3.8' and python_version != '3.10'
 
 # The tornado package is used by ipykernel which is used by jupyter.
 # Tornado 5.0.0 and 5.0.1 rejects installation if the Python ssl module
