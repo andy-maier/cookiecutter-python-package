@@ -169,8 +169,9 @@ pyinstrument>=3.0.1
 
 # Package dependency management tools (not used by any make rules)
 pipdeptree>=2.0.0
+# pip-check-reqs 2.3.2 solves issues with newer pip versions
 pip-check-reqs>=2.0.4,<2.1.1; python_version == '2.7'
-pip-check-reqs>=2.0.4; python_version >= '3.4'
+pip-check-reqs>=2.3.2; python_version >= '3.4'
 
 
 # Indirect dependencies with special constraints:
