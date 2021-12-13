@@ -182,9 +182,14 @@ docutils==0.13.1; python_version >= '3.4' and python_version <= '3.9'
 docutils==0.14; python_version >= '3.10'
 sphinx-git==10.1.1
 GitPython==2.1.1
+gitdb2==2.0.0
+gitdb==4.0.1; python_version >= '3.4'
+smmap2==2.0.1
+smmap==3.0.1; python_version >= '3.4'
 sphinxcontrib-fulltoc==1.2.0
 sphinxcontrib-websupport==1.1.2
-Pygments==2.1.3
+Pygments==2.1.3; python_version <= '3.4'
+Pygments==2.5.1; python_version >= '3.5'
 sphinx-rtd-theme==0.5.0
 autodocsumm==0.1.13; python_version <= '3.9'
 autodocsumm==0.2.5; python_version >= '3.10'
@@ -219,7 +224,9 @@ functools32==3.2.3.post2; python_version == '2.7'  # technically: python_version
 # Twine (no imports, invoked via twine script):
 twine==1.8.1; python_version <= '3.5'
 twine==3.0.0; python_version >= '3.6'
-readme-renderer==23.0
+# readme-renderer (used by twine, uses Pygments)
+readme-renderer==23.0; python_version == '2.7'
+readme-renderer==25.0; python_version >= '3.5'
 
 # Jupyter Notebook (no imports, invoked via jupyter script):
 # The jupyter package is not installed on Python 3.4 on Windows, because its
@@ -309,8 +316,6 @@ funcsigs==1.0.2; python_version == '2.7'
 functools32==3.2.3.post2; python_version < '3.2'
 future==0.18.2; python_version == '2.7'
 futures==3.3.0; python_version < '3.2'
-gitdb==4.0.1; python_version >= '3.4'
-gitdb2==2.0.0; python_version == '2.7'
 html5lib==0.999999999; python_version == '2.7'
 httpretty==0.9.5
 idna==2.5
@@ -351,8 +356,6 @@ scandir==1.9.0; python_version == '2.7'
 sh==1.12.14
 simplegeneric==0.8.1
 singledispatch==3.4.0.3; python_version < '3.4'
-smmap==3.0.1
-smmap2==2.0.1; python_version == '2.7'
 snowballstemmer==1.2.1
 sphinxcontrib-applehelp==1.0.0; python_version >= '3.4'
 sphinxcontrib-devhelp==1.0.0; python_version >= '3.4'
