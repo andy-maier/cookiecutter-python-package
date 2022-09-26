@@ -136,7 +136,7 @@ pathlib2==2.3.3; python_version < '3.4' and sys_platform != 'win32'
 # Indirect dependencies that must be handled early (must be consistent with dev-requirements.txt)
 
 # tox and flake8 have requirements on importlib-metadata
-importlib-metadata==1.1.0; python_version <= '3.7'
+importlib-metadata==1.1.0
 
 
 # Direct dependencies for development (must be consistent with dev-requirements.txt)
@@ -322,7 +322,6 @@ html5lib==0.999999999; python_version == '2.7'
 httpretty==0.9.5
 idna==2.5
 imagesize==0.7.1
-importlib-metadata==0.12; python_version <= '3.7'
 isort==4.3.5
 Jinja2==2.8; python_version <= '3.9'
 Jinja2==2.10.2; python_version >= '3.10'

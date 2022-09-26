@@ -23,6 +23,8 @@ Released: not yet
 
 * Fixed error when installing virtualenv in install test on Python 2.7.
 
+* Fixed a RecursionError exception raised by flake8 on Python 3.6 and 3.7.
+
 **Enhancements:**
 
 * Support for Python 3.10: Added Python 3.10 in GitHub Actions tests, and in
