@@ -23,6 +23,8 @@ Released: not yet
 
 * Fixed error when installing virtualenv in install test on Python 2.7.
 
+* Fixed coveralls issues with KeyError and HTTP 422 Unprocessable Entity.
+
 **Enhancements:**
 
 * Support for Python 3.10: Added Python 3.10 in GitHub Actions tests, and in
