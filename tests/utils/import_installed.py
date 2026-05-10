@@ -32,8 +32,8 @@ def import_installed(module_name):
     Example usage, e.g. in a test program::
 
         from ...utils import import_installed
-        [[ cookiecutter.python_package_name ]] = import_installed('[[ cookiecutter.python_package_name ]]')  # pylint: disable=invalid-name
-        from [[ cookiecutter.python_package_name ]] import ...
+        {[ cookiecutter.python_package_name ]} = import_installed('{[ cookiecutter.python_package_name ]}')  # pylint: disable=invalid-name
+        from {[ cookiecutter.python_package_name ]} import ...
 
     The number of dots in `from ..utils` depends on where the test program
     containing this code is located, relative to the tests/utils.py file.

@@ -1,5 +1,4 @@
-#
-# Sphinx config file for [[ cookiecutter.project_name ]] project.
+# Sphinx config file
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -69,12 +68,12 @@ else:
     master_doc = 'docs/index'
 
 # General information about the project.
-project = "[[ cookiecutter.pypi_project_name ]]"
+project = "{[ cookiecutter.pypi_project_name ]}"
 #copyright = ''
-author = "[[ cookiecutter.author_full_name.replace('\"', '\\\"') ]]"
+author = "{[ cookiecutter.author_full_name.replace('\"', '\\\"') ]}"
 
 # The short description of the package.
-_short_description = "[[ cookiecutter.short_description ]]"
+_short_description = "{[ cookiecutter.short_description ]}"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -106,7 +105,7 @@ else:
 
 # Some prints, for extra information
 print(f"conf.py: pwd: {os.getcwd()}")
-print(f"conf.py: [[ cookiecutter.pypi_project_name ]] version: {version}")
+print(f"conf.py: {[ cookiecutter.pypi_project_name ]} version: {version}")
 print("conf.py: Last 5 commits:")
 sys.stdout.flush()
 os.system('git log --decorate --oneline | head -5')
@@ -129,7 +128,7 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = [".tox", ".git",
-                    "[[ cookiecutter.pypi_project_name ]].egg-info", ".eggs",
+                    "{[ cookiecutter.pypi_project_name ]}.egg-info", ".eggs",
                     "README.rst", "INSTALL.md", "build", "build_doc", "design",
                     "dist", "tests", "try", "attic"]
 
@@ -468,10 +467,10 @@ linkcheck_allowed_redirects = {
 linkcheck_ignore = [
 
     # Ignored in order not to run into rate-limit of github.com
-    r'https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]/issues/\d+',
+    r'https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/issues/\d+',
 
     # Page exists, but linkcheck sometimes gets HTTP 404 "Not Found"
-    r'https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]/security/dependabot',
+    r'https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/security/dependabot',
 
     # Page exists, but linkcheck sometimes gets HTTP 403 "Forbidden"
     r'https://wiki.mozilla.org/CA/Included_Certificates',

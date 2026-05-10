@@ -4,14 +4,14 @@
 
 This project supports its released versions as follows:
 
-- The [latest released version on Pypi](https://pypi.org/project/[[ cookiecutter.pypi_package_name ]]/)
+- The [latest released version on Pypi](https://pypi.org/project/{[ cookiecutter.pypi_package_name ]}/)
   gets fixes, including security fixes.
 - Earlier versions are not fixed anymore.
 
 ## Reporting a Vulnerability
 
 Please report vulnerabilities via the
-[Security Advisories](https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]/security/advisories)
+[Security Advisories](https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/security/advisories)
 page of this project. This ensures that they are passed on to the maintainers
 privately.
 

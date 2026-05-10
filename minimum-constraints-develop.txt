@@ -50,7 +50,7 @@ pipdeptree==2.24.0
 pip-check-reqs==2.4.3; python_version <= '3.11'
 pip-check-reqs==2.5.1; python_version >= '3.12'
 
-[% if cookiecutter.with_readthedocs %]
+{% if cookiecutter.with_readthedocs %}
 # Sphinx doc builder
 Sphinx==7.2.0
 autodocsumm==0.2.12
@@ -68,13 +68,13 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.9
 sphinxcontrib-websupport==1.2.4
 
-[% endif %]
-[% if cookiecutter.with_changelog and cookiecutter.with_readthedocs %]
+{% endif %}
+{% if cookiecutter.with_changelog and cookiecutter.with_readthedocs %}
 # Change log builder
 towncrier==22.8.0
 
-[% endif %]
-[% if cookiecutter.with_jupyter_notebook %]
+{% endif %}
+{% if cookiecutter.with_jupyter_notebook %}
 # Jupyter Notebook
 # TODO: Re-enable for Python 3.13 on Windows once pywin32 install issue is solved, see
 #       https://github.com/mhammond/pywin32/issues/2367
@@ -98,7 +98,7 @@ nbformat==5.8.0; sys_platform != 'win32' or python_version <= '3.12'
 notebook-shim==0.2.3; sys_platform != 'win32' or python_version <= '3.12'
 qtconsole==5.4.2; sys_platform != 'win32' or python_version <= '3.12'
 
-[% endif %]
+{% endif %}
 
 # ------------------------------------------------------------------------------
 # Indirect dependencies for development that are needed in the requirements

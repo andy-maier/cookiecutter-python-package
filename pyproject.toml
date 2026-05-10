@@ -24,21 +24,21 @@ zip-safe = true
 # of packages including sub-packages, or by specifying 'packages.find' with
 # wildcards. The strings in 'packages.find' are matched using glob pattern
 # matching against the package path.
-include = ["[[ cookiecutter.python_package_name ]]", "[[ cookiecutter.python_package_name ]].*"]
+include = ["{[ cookiecutter.python_package_name ]}", "{[ cookiecutter.python_package_name ]}.*"]
 
 [project]
-name = "[[ cookiecutter.pypi_package_name ]]"
-description = "[[ cookiecutter.short_description ]]"
+name = "{[ cookiecutter.pypi_package_name ]}"
+description = "{[ cookiecutter.short_description ]}"
 authors = [
-    {name = "[[ cookiecutter.author_full_name ]]", email = "[[ cookiecutter.author_email ]]"}
+    {name = "{[ cookiecutter.author_full_name ]}", email = "{[ cookiecutter.author_email ]}"}
 ]
 maintainers = [
-    {name = "[[ cookiecutter.author_full_name ]]", email = "[[ cookiecutter.author_email ]]"}
+    {name = "{[ cookiecutter.author_full_name ]}", email = "{[ cookiecutter.author_email ]}"}
 ]
 readme = "README.rst"
 # License info in new PEP 639 format (since setuptools 77.0.3)
 # See https://spdx.org/licenses/ for license strings.
-license = "[[ cookiecutter.license ]]"
+license = "{[ cookiecutter.license ]}"
 license-files = ["LICENSE"]
 keywords = []  # TODO: Add some keywords for the project
 classifiers = [
@@ -61,13 +61,13 @@ requires-python = ">=3.9"
 dynamic = ["version", "dependencies", "optional-dependencies"]
 
 [project.urls]
-Homepage = "https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]"
-"Bug Tracker" = "https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]/issues"
-"Source Code" = "https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]"
-[% if cookiecutter.with_readthedocs == "Yes" %]
+Homepage = "https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}"
+"Bug Tracker" = "https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/issues"
+"Source Code" = "https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}"
+{% if cookiecutter.with_readthedocs == "Yes" %}
 Documentation = "https://<readthedocs_name>.readthedocs.io"
 Changelog = "https://<readthedocs_name>.readthedocs.io/en/master/changes.html"
-[% endif %]
+{% endif %}
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
@@ -77,8 +77,8 @@ testutils = {file = ['extra-testutils-requirements.txt']}
 
 [tool.setuptools_scm]
 # Get the version from the Git tag, and write a version file:
-version_file = "[[ cookiecutter.python_package_name ]]/_version_scm.py"
+version_file = "{[ cookiecutter.python_package_name ]}/_version_scm.py"
 
 [project.entry-points.pytest11]
 # Pytest plugin with fixtures (required for fixtures with session scope).
-[[ cookiecutter.python_package_name ]]-testutils = "[[ cookiecutter.python_package_name ]].testutils"
+{[ cookiecutter.python_package_name ]}-testutils = "{[ cookiecutter.python_package_name ]}.testutils"

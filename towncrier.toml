@@ -2,14 +2,14 @@
 
 [tool.towncrier]
 directory = "changes"
-package = "[[ cookiecutter.pypi_package_name ]]"
+package = "{[ cookiecutter.pypi_package_name ]}"
 # package_dir = "."
 filename = "docs/changes.rst"
 template = "changes/changes.rst.j2"
 start_string = ".. towncrier start"
 title_format = "Version {version}"
 underlines = "^~"
-issue_format = "`#{issue} <https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]/issues/{issue}>`_"
+issue_format = "`#{issue} <https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/issues/{issue}>`_"
 
 # The following array defines the allowable change types, in order
 

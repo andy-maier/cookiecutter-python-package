@@ -3,7 +3,7 @@
 
 Change log
 ==========
-[% if cookiecutter.with_changelog %]
+{% if cookiecutter.with_changelog %}
 
 .. ============================================================================
 ..
@@ -17,4 +17,4 @@ Change log
    .. include:: tmp_changes.rst
 
 .. towncrier start
-[% endif %]
+{% endif %}
