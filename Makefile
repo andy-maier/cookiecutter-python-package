@@ -104,7 +104,7 @@ package_py_files := \
     $(wildcard $(python_package_name)/*/*.py) \
     $(wildcard $(python_package_name)/*/*/*.py) \
 
-{% if cookiecutter.with_readthedocs %}
+{%- if cookiecutter.with_readthedocs %}
 # Directory for generated API documentation
 doc_build_dir := build_doc
 
@@ -119,15 +119,15 @@ doc_opts := -v -d $(doc_build_dir)/doctrees -c $(doc_conf_dir) .
 doc_dependent_files := \
     $(doc_conf_dir)/conf.py \
     $(wildcard $(doc_conf_dir)/*.rst) \
-{% if cookiecutter.with_jupyter_notebook %}
+{%- if cookiecutter.with_jupyter_notebook %}
     $(wildcard $(doc_conf_dir)/notebooks/*.ipynb) \
-{% endif %}
+{%- endif %}
     $(wildcard $(doc_conf_dir)/images/*.svg) \
     $(wildcard changes/*) \
     $(package_py_files) \
     $(version_file) \
 
-{% endif %}
+{%- endif %}
 # Directory with test source files
 test_dir := tests
 
@@ -142,13 +142,13 @@ test_function_py_files := \
     $(wildcard $(test_dir)/function/*/*.py) \
 		$(wildcard $(test_dir)/function/*/*/*.py) \
 
-{% if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test %}
 test_end2end_py_files := \
     $(wildcard $(test_dir)/end2end/*.py) \
     $(wildcard $(test_dir)/end2end/*/*.py) \
     $(wildcard $(test_dir)/end2end/*/*/*.py) \
 
-{% endif %}
+{%- endif %}
 # Directory for .done files
 done_dir := done
 
@@ -176,13 +176,13 @@ check_py_files := \
     $(filter-out $(vendor_py_files), $(package_py_files)) \
     $(test_unit_py_files) \
     $(test_function_py_files) \
-{% if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test %}
     $(test_end2end_py_files) \
-{% endif %}
+{%- endif %}
     $(doc_conf_dir)/conf.py \
-{% if cookiecutter.with_jupyter_notebook %}
+{%- if cookiecutter.with_jupyter_notebook %}
     $(wildcard docs/notebooks/*.py) \
-{% endif %}
+{%- endif %}
 
 # Packages whose dependencies are checked using pip-missing-reqs
 check_reqs_packages := \
@@ -199,16 +199,16 @@ check_reqs_packages := \
     pylint \
     safety \
     bandit \
-{% if cookiecutter.with_jupyter_notebook %}
+{%- if cookiecutter.with_jupyter_notebook %}
     jupyter \
     notebook \
-{% endif %}
-{% if cookiecutter.with_readthedocs %}
+{%- endif %}
+{%- if cookiecutter.with_readthedocs %}
     sphinx \
-{% endif %}
-{% if cookiecutter.with_changelog and cookiecutter.with_readthedocs %}
+{%- endif %}
+{%- if cookiecutter.with_changelog and cookiecutter.with_readthedocs %}
     towncrier \
-{% endif %}
+{%- endif %}
 
 # Pytest options
 pytest_general_opts := -s --color=yes
@@ -246,20 +246,20 @@ help:
 	@echo "  bandit            - Run bandit checker"
 	@echo "  unittest          - Run unit tests (adds to coverage results)"
 	@echo "  functiontest      - Run function tests (adds to coverage results)"
-{% if cookiecutter.with_install_test %}
+{%- if cookiecutter.with_install_test %}
 	@echo "  installtest       - Run install tests"
-{% endif %}
+{%- endif %}
 	@echo "  build             - Build the distribution files in: $(dist_dir)"
-{% if cookiecutter.with_readthedocs %}
+{%- if cookiecutter.with_readthedocs %}
 	@echo "  builddoc          - Build documentation in: $(doc_build_dir)"
 	@echo "  doclinkcheck      - Run check for validity of doc links"
-{% endif %}
+{%- endif %}
 	@echo "  all               - Combined target: Do all of the above"
 	@echo "  test              - Combined target: unittest, functiontest"
 	@echo "  check             - Combined target: flake8, ruff, pylint"
-{% if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test %}
 	@echo "  end2end           - Run end2end tests (adds to coverage results, checks blanked-out properties in log)"
-{% endif %}
+{%- endif %}
 	@echo "  authors           - Generate AUTHORS.md file from git log"
 	@echo "  uninstall         - Uninstall package from active Python environment"
 	@echo "  release_branch    - Create a release branch when releasing a version (requires VERSION and optionally BRANCH to be set)"
@@ -289,7 +289,7 @@ help:
 _always:
 
 .PHONY: all
-all: install develop flake8 ruff pylint check_reqs safety bandit unittest functiontest installtest build{% if cookiecutter.with_readthedocs %} builddoc doclinkcheck{% endif %}
+all: install develop flake8 ruff pylint check_reqs safety bandit unittest functiontest installtest build{%- if cookiecutter.with_readthedocs %} builddoc doclinkcheck{%- endif %}
 	@echo "Makefile: $@ done."
 
 .PHONY: test
@@ -458,7 +458,7 @@ else
 endif
 	@echo "Makefile: $@ done."
 
-{% if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test %}
 .PHONY:	end2end
 end2end: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $(test_end2end_py_files) $(coverage_config_file)
 	rm -f end2end.log
@@ -467,7 +467,7 @@ end2end: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $
 	tools/check_blanked.py --accept-null end2end.log
 	@echo "Makefile: $@ done."
 
-{% endif %}
+{%- endif %}
 .PHONY: build
 build: $(bdist_file) $(sdist_file)
 	@echo "Makefile: $@ done."
@@ -484,7 +484,7 @@ $(bdist_file) $(version_file): Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LE
 	ls -l $(bdist_file) $(version_file) || ls -l $(dist_dir) && echo package_level=$(package_level) && $(PYTHON_CMD) -m setuptools_scm
 	@echo "Makefile: Done building the wheel distribution archive: $(bdist_file)"
 
-{% if cookiecutter.with_readthedocs %}
+{%- if cookiecutter.with_readthedocs %}
 .PHONY: builddoc
 builddoc: $(doc_build_dir)/html/docs/index.html
 	@echo "Makefile: $@ done."
@@ -505,7 +505,7 @@ doclinkcheck: $(doc_dependent_files)
 	@echo "Makefile: Look for any errors in the above output or in: $(doc_build_dir)/linkcheck/output.txt"
 	@echo "Makefile: $@ done."
 
-{% endif %}
+{%- endif %}
 .PHONY: authors
 authors: AUTHORS.md
 	@echo "Makefile: $@ done."
@@ -563,10 +563,10 @@ release_branch:
 	@if [ -z "$$(git branch -l release_$(VERSION))" ]; then echo "Creating release branch release_$(VERSION)"; git checkout -b release_$(VERSION); fi
 	git checkout release_$(VERSION)
 	make authors
-{% if cookiecutter.with_changelog and cookiecutter.with_readthedocs %}
+{%- if cookiecutter.with_changelog and cookiecutter.with_readthedocs %}
 	towncrier build --version $(VERSION) --yes
 	@if ls changes/*.rst >/dev/null 2>/dev/null; then echo ""; echo "Error: There are incorrectly named change fragment files that towncrier did not use:"; ls -1 changes/*.rst; echo ""; false; fi
-{% endif %}
+{%- endif %}
 	git commit -asm "Release $(VERSION)"
 	git push --set-upstream origin release_$(VERSION)
 	rm -f branch.tmp
