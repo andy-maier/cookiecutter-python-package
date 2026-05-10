@@ -1,0 +1,115 @@
+# ------------------------------------------------------------------------------
+# Pip requirements file for packages needed for development.
+#
+# Make sure that the minimum versions required in this file are consistent with
+# the minimum versions specified in minimum-constraints.txt.
+
+
+# ------------------------------------------------------------------------------
+# Direct and necessary indirect dependencies for development.
+# Must be consistent with minimum-constraints-develop.txt.
+
+# Tox
+tox>=4.15.0
+
+# Package builder
+build>=1.0.0
+pyproject-hooks>=1.1.0
+virtualenv>=20.36.1
+
+# Test driver
+pytest>=8.4.0
+pluggy>=1.5.0
+
+# Coverage reporter
+coverage>=7.8.0
+# coveralls version 4.0.1 requires Python>=3.8 and pin Python<=3.12.
+# coveralls version 4.0.2 requires Python>=3.10 and no longer pins to a Python 3.x version.
+coveralls>=4.0.1; python_version == '3.9'
+coveralls>=4.0.2; python_version >= '3.10'
+
+# Flake8 checker
+flake8>=6.1.0
+mccabe>=0.7.0
+pycodestyle>=2.11.0
+pyflakes>=3.1.0
+
+# Ruff checker
+ruff>=0.3.5
+
+# PyLint checker
+pylint>=3.3.1
+astroid>=3.3.7
+
+# Safety checker
+# safety 3.6.1 fixes the issue with typer >=0.17.0, see https://github.com/pyupio/safety/issues/778
+# safety 3.6.2 removed the pinning of pydantic<2.10.0,>=2.6.0.
+safety>=3.6.2
+safety-schemas>=0.0.16
+
+# Bandit checker
+bandit>=1.7.8
+
+# Package dependency management tools
+pipdeptree>=2.24.0
+# pip-check-reqs 2.4.3 fixes a speed issue on Python 3.11 and requires pip>=21.2.4
+# pip-check-reqs 2.5.0 has issue https://github.com/r1chardj0n3s/pip-check-reqs/issues/143
+pip-check-reqs>=2.4.3,!=2.5.0; python_version <= '3.11'
+pip-check-reqs>=2.5.1; python_version >= '3.12'
+
+[% if cookiecutter.with_readthedocs %]
+# Sphinx doc builder
+Sphinx>=7.2.0
+autodocsumm>=0.2.12
+Babel>=2.11.0
+docutils>=0.20.1
+Pygments>=2.15.0
+sphinx-git>=10.1.1
+sphinx-rtd-theme>=2.0.0
+sphinxcontrib-applehelp>=1.0.4
+sphinxcontrib-devhelp>=1.0.2
+sphinxcontrib-htmlhelp>=2.0.1
+sphinxcontrib-jquery>=4.1
+sphinxcontrib-jsmath>=1.0.1
+sphinxcontrib-qthelp>=1.0.3
+sphinxcontrib-serializinghtml>=1.1.9
+sphinxcontrib-websupport>=1.2.4
+
+[% endif %]
+[% if cookiecutter.with_changelog and cookiecutter.with_readthedocs %]
+# Change log builder
+towncrier>=22.8.0
+
+[% endif %]
+[% if cookiecutter.with_jupyter_notebook %]
+# Jupyter Notebook
+# Note: The packages for Jupyter Notebook are prone to causing endless pip backtracking when
+#       installed with minimum versions. This was addressed by pinning the package versions
+#       to a maximum in order to reduce the search space for pip.
+# TODO: Re-enable for Python 3.13 on Windows once pywin32 install issue is solved, see
+#       https://github.com/mhammond/pywin32/issues/2367
+notebook>=7.4.2; sys_platform != 'win32' or python_version <= '3.12'
+ipykernel>=6.22.0; sys_platform != 'win32' or python_version <= '3.12'
+ipython-genutils>=0.2.0; sys_platform != 'win32' or python_version <= '3.12'
+ipython>=8.10.0; sys_platform != 'win32' or python_version <= '3.12'
+ipywidgets>=8.0.5; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-client>=8.1.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-console>=6.6.3; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-core>=5.3.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-server>=2.14.1; sys_platform != 'win32' or python_version <= '3.12'
+jupyter>=1.0.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab-pygments>=0.2.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab-server>=2.27.1; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab-widgets>=3.0.7; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab>=4.4.8; sys_platform != 'win32' or python_version <= '3.12'
+nbclient>=0.7.4; sys_platform != 'win32' or python_version <= '3.12'
+nbconvert>=7.17.0; sys_platform != 'win32' or python_version <= '3.12'
+nbformat>=5.8.0; sys_platform != 'win32' or python_version <= '3.12'
+notebook-shim>=0.2.3; sys_platform != 'win32' or python_version <= '3.12'
+qtconsole>=5.4.2; sys_platform != 'win32' or python_version <= '3.12'
+
+[% endif %]
+
+# ------------------------------------------------------------------------------
+# Indirect dependencies for development that are needed for some reason.
+# Must be consistent with minimum-constraints-develop.txt.

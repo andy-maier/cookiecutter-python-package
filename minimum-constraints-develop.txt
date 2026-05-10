@@ -1,0 +1,176 @@
+# ------------------------------------------------------------------------------
+# Pip constraints file for packages needed for development.
+#
+# This file specifies constraints that match the minimum versions specified in
+# requirements-develop.txt.
+
+# ------------------------------------------------------------------------------
+# Direct and necessary indirect dependencies for development.
+# Must be consistent with requirements-develop.txt.
+
+# Tox
+tox==4.15.0
+
+# Package builder
+build==1.0.0
+pyproject-hooks==1.1.0
+virtualenv==20.36.1
+
+# Test driver
+pytest==8.4.0
+pluggy==1.5.0
+
+# Coverage reporter
+coverage==7.8.0
+coveralls==4.0.1; python_version == '3.9'
+coveralls==4.0.2; python_version >= '3.10'
+
+# Flake8 checker
+flake8==6.1.0
+mccabe==0.7.0
+pycodestyle==2.11.0
+pyflakes==3.1.0
+
+# Ruff checker
+ruff==0.3.5
+
+# PyLint checker
+pylint==3.3.1
+astroid==3.3.7
+
+# Safety checker
+safety==3.6.2
+safety-schemas==0.0.16
+
+# Bandit checker
+bandit==1.7.8
+
+# Package dependency management tools
+pipdeptree==2.24.0
+pip-check-reqs==2.4.3; python_version <= '3.11'
+pip-check-reqs==2.5.1; python_version >= '3.12'
+
+[% if cookiecutter.with_readthedocs %]
+# Sphinx doc builder
+Sphinx==7.2.0
+autodocsumm==0.2.12
+Babel==2.11.0
+docutils==0.20.1
+Pygments==2.15.0
+sphinx-git==10.1.1
+sphinx-rtd-theme==2.0.0
+sphinxcontrib-applehelp==1.0.4
+sphinxcontrib-devhelp==1.0.2
+sphinxcontrib-htmlhelp==2.0.1
+sphinxcontrib-jquery==4.1
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==1.0.3
+sphinxcontrib-serializinghtml==1.1.9
+sphinxcontrib-websupport==1.2.4
+
+[% endif %]
+[% if cookiecutter.with_changelog and cookiecutter.with_readthedocs %]
+# Change log builder
+towncrier==22.8.0
+
+[% endif %]
+[% if cookiecutter.with_jupyter_notebook %]
+# Jupyter Notebook
+# TODO: Re-enable for Python 3.13 on Windows once pywin32 install issue is solved, see
+#       https://github.com/mhammond/pywin32/issues/2367
+notebook==7.4.2; sys_platform != 'win32' or python_version <= '3.12'
+ipykernel==6.22.0; sys_platform != 'win32' or python_version <= '3.12'
+ipython-genutils==0.2.0; sys_platform != 'win32' or python_version <= '3.12'
+ipython==8.10.0; sys_platform != 'win32' or python_version <= '3.12'
+ipywidgets==8.0.5; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-client==8.1.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-console==6.6.3; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-core==5.3.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyter-server==2.14.1; sys_platform != 'win32' or python_version <= '3.12'
+jupyter==1.0.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab-pygments==0.2.0; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab-server==2.27.1; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab-widgets==3.0.7; sys_platform != 'win32' or python_version <= '3.12'
+jupyterlab==4.4.8; sys_platform != 'win32' or python_version <= '3.12'
+nbclient==0.7.4; sys_platform != 'win32' or python_version <= '3.12'
+nbconvert==7.17.0; sys_platform != 'win32' or python_version <= '3.12'
+nbformat==5.8.0; sys_platform != 'win32' or python_version <= '3.12'
+notebook-shim==0.2.3; sys_platform != 'win32' or python_version <= '3.12'
+qtconsole==5.4.2; sys_platform != 'win32' or python_version <= '3.12'
+
+[% endif %]
+
+# ------------------------------------------------------------------------------
+# Indirect dependencies for development that are needed in the requirements
+# file for some reason. Must be consistent with requirements-develop.txt.
+
+
+# ------------------------------------------------------------------------------
+# All other indirect dependencies for development that are not in
+# requirements-develop.txt.
+
+alabaster==0.7.9
+anyio==4.12.1
+appdirs==1.4.3
+atomicwrites==1.4.0
+Authlib==1.6.6
+bleach==3.3.0
+chardet==3.0.4
+click-default-group==1.2.4
+click==8.0.2
+colorama==0.4.6
+contextlib2==0.6.0
+dill==0.3.7
+dparse==0.6.4
+entrypoints==0.3.0
+filelock==3.16.1; python_version == '3.9'
+filelock==3.20.3; python_version >= '3.10'
+gitdb==4.0.8
+GitPython==3.1.41
+html5lib==1.0.1
+httpx==0.28.1
+imagesize==1.3.0
+# For importlib-metadata versions in Python, see https://pypi.org/project/importlib-metadata/
+importlib-metadata==8.7.0
+# importlib-resources>=5 is included in Python >= 3.10
+importlib-resources==5.12.0; python_version == '3.9'
+incremental==22.10.0
+iniconfig==1.1.1
+isort==4.3.8
+Jinja2==3.1.6
+keyring==18.0.0
+lazy-object-proxy==1.4.3
+levenshtein==0.25.1
+marshmallow==3.26.2
+more-itertools==8.0.0
+# nltk==3.9.2 is commented out due to issue https://github.com/pyupio/safety/issues/847
+# nltk==3.9.2; python_version == '3.9'
+nltk==3.9.3; python_version >= '3.10'
+packaging==24.2
+pkginfo==1.4.2
+platformdirs==4.1.0
+psutil==6.1.0
+pydantic_core==2.41.1
+pydantic==2.12.0
+pyparsing==2.4.5
+PyYAML==6.0.2
+requests-toolbelt==0.8.0
+rfc3986==1.4.0
+rich==12.0.0
+roman-numerals-py==4.1.0
+roman-numerals==4.1.0
+ruamel.yaml==0.17.21
+smmap==3.0.1
+snowballstemmer==2.0.0
+stevedore==5.2.0
+tenacity==8.5.0
+toml==0.10.0
+tomli==1.1.0
+tomlkit==0.10.1
+tqdm==4.66.3
+typer-cli==0.16.0
+typer-slim==0.16.0
+typer==0.16.0
+typing==3.6.1
+webencodings==0.5.1
+wrapt==1.15

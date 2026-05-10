@@ -1,4 +1,4 @@
-Design information for {{ cookiecutter.project_name }} project
+Design information for [[ cookiecutter.project_name ]] project
 ==============================================================
 
 This directory contains loosely organized files in markdown, text or RST format

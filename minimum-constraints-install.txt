@@ -1,0 +1,39 @@
+# ------------------------------------------------------------------------------
+# Pip constraints file for packages needed for installation and base.
+#
+# This file specifies constraints that match the minimum versions specified in
+# requirements.txt and requirements-base.txt.
+
+
+# ------------------------------------------------------------------------------
+# Base dependencies.
+# Must be consistent with requirements-base.txt and build-system.requires in pyproject.toml.
+
+pip==26.0
+setuptools==78.1.1
+# Note on not specifying 'setuptools-scm[toml]': Extras cannot be in constraints files
+setuptools-scm==9.2.0
+wheel==0.46.2
+
+
+# ------------------------------------------------------------------------------
+# Direct dependencies for install.
+# Must be consistent with requirements.txt.
+
+# TODO: Add such dependencies with ==. If they also appear in
+#       minimum-constraints-develop.txt, remove them there.
+
+
+# ------------------------------------------------------------------------------
+# Indirect dependencies for install that are needed in the requirements file
+# for some reason. Must be consistent with requirements.txt.
+
+# TODO: Add such dependencies with ==. If they also appear in
+#       minimum-constraints-develop.txt, remove them there.
+
+
+# ------------------------------------------------------------------------------
+# All other indirect dependencies for install that are not in requirements.txt.
+
+# TODO: Add such dependencies with ==. If they also appear in
+#       minimum-constraints-develop.txt, remove them there.

@@ -5,7 +5,7 @@ Development
 ===========
 
 This section only needs to be read by developers of the
-{{ cookiecutter.project_name }} project,
+[[ cookiecutter.project_name ]] project,
 including people who want to make a fix or want to test the project.
 
 
@@ -14,9 +14,9 @@ including people who want to make a fix or want to test the project.
 Repository
 ----------
 
-The repository for the {{ cookiecutter.project_name }} project is on GitHub:
+The repository for the [[ cookiecutter.project_name ]] project is on GitHub:
 
-https://github.com/{{ cookiecutter.github_org }}/{{ cookiecutter.github_repo }}
+https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]
 
 
 .. _`Setting up the development environment`:
@@ -29,8 +29,8 @@ Setting up the development environment
 
    .. code-block:: bash
 
-        $ git clone git@github.com:{{ cookiecutter.github_org }}/{{ cookiecutter.github_repo }}.git
-        $ cd {{ cookiecutter.github_repo }}
+        $ git clone git@github.com:[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]].git
+        $ cd [[ cookiecutter.github_repo ]]
 
    If you do not have write access, create a fork on GitHub and clone the
    fork in the way shown above.
@@ -65,7 +65,7 @@ Building the documentation
 --------------------------
 
 The ReadTheDocs (RTD) site is used to publish the documentation for the
-project package at https://{{ cookiecutter.package_name }}.readthedocs.io/
+project package at https://<readthedocs_name>.readthedocs.io/
 
 This page is automatically updated whenever the Git repo for this package
 changes the branch from which this documentation is built.
@@ -91,7 +91,7 @@ Testing
 
 All of the following `make` commands run the tests in the currently active
 Python environment.
-Depending on how the `{{ cookiecutter.package_name }}` package is installed in
+Depending on how the `[[ cookiecutter.pypi_package_name ]]` package is installed in
 that Python environment, either the directories in the main repository
 directory are used, or the installed package.
 The test case files and any utility functions they use are always used from
@@ -103,9 +103,9 @@ The `tests` directory has the following subdirectory structure:
 
     tests
      +-- unittest            Unit tests
-{%- if cookiecutter.end2end_test == "Yes" %}
+[%- if cookiecutter.with_end2end_test == "Yes" %]
      +-- end2endtest         End2end tests
-{%- endif %}
+[%- endif %]
 
 There are multiple types of tests:
 
@@ -132,7 +132,7 @@ There are multiple types of tests:
 
    Options for pytest can be passed using the ``--pytest-options`` option.
 
-{% if cookiecutter.end2end_test == "Yes" %}
+[% if cookiecutter.with_end2end_test == "Yes" %]
 2. End2end tests
 
    These tests are run ... (describe) ..., and the tests validate
@@ -155,7 +155,7 @@ There are multiple types of tests:
 
    Options for pytest can be passed using the ``--pytest-options`` option.
 
-{% endif %}
+[% endif %]
 To run the unit tests in all supported Python environments, the
 Tox tool can be used. It creates the necessary virtual Python environments and
 executes `make test` (i.e. the unit tests) in each of them.
@@ -189,17 +189,17 @@ particular version of the package into the current directory and unpack it:
 
 .. code-block:: bash
 
-    $ pip download --no-deps --no-binary :all: {{ cookiecutter.package_name }}==1.0.0
-    $ tar -xf {{ cookiecutter.package_name }}-1.0.0.tar.gz
-    $ cd {{ cookiecutter.package_name }}-1.0.0
+    $ pip download --no-deps --no-binary :all: [[ cookiecutter.pypi_package_name ]]==1.0.0
+    $ tar -xf [[ cookiecutter.pypi_package_name ]]-1.0.0.tar.gz
+    $ cd [[ cookiecutter.pypi_package_name ]]-1.0.0
     $ ls -1
     -rw-r--r--   1 johndoe  staff    468 Jun 29 22:31 INSTALL.md
     -rw-r--r--   1 johndoe  staff  26436 May 26 06:45 LICENSE.txt
     -rw-r--r--   1 johndoe  staff    367 Jul  3 07:54 MANIFEST.in
     -rw-r--r--   1 johndoe  staff   3451 Jul  3 07:55 PKG-INFO
     -rw-r--r--   1 johndoe  staff   7665 Jul  2 23:20 README.rst
-    drwxr-xr-x  29 johndoe  staff    928 Jul  3 07:55 {{ cookiecutter.package_name }}
-    drwxr-xr-x   8 johndoe  staff    256 Jul  3 07:55 {{ cookiecutter.package_name }}.egg-info
+    drwxr-xr-x  29 johndoe  staff    928 Jul  3 07:55 [[ cookiecutter.python_package_name ]]
+    drwxr-xr-x   8 johndoe  staff    256 Jul  3 07:55 [[ cookiecutter.python_package_name ]].egg-info
     -rw-r--r--   1 johndoe  staff   1067 Jun 29 22:31 requirements.txt
     -rw-r--r--   1 johndoe  staff     38 Jul  3 07:55 setup.cfg
     -rwxr-xr-x   1 johndoe  staff   7555 Jul  3 07:24 setup.py
@@ -235,9 +235,9 @@ These commands are listed in the help of the ``setup.py`` script:
     Extra commands:
       . . .
       test              Run unit tests using pytest
-{%- if cookiecutter.end2end_test == "Yes" %}
+[%- if cookiecutter.with_end2end_test == "Yes" %]
       end2endtest       Run end2end tests using pytest
-{%- endif %}
+[%- endif %]
       . . .
 
 The additional options supported by these commands are shown in their help:
@@ -257,9 +257,9 @@ Note: The ``test`` command of ``setup.py`` is not the deprecated built-in
 command (see `<https://github.com/pypa/setuptools/issues/1684>`_), but has been
 implemented in ``setup.py`` in such a way that it only runs the tests but
 does not install anything upfront.
-{%- if cookiecutter.end2end_test == "Yes" %}
+[%- if cookiecutter.with_end2end_test == "Yes" %]
 The ``end2endtest`` command has been implemented in the same way.
-{%- endif %}
+[%- endif %]
 Therefore, this approach can be used for testing in Linux distributions that
 include this package as an OS-level package.
 
@@ -331,7 +331,7 @@ Further rules:
 Releasing a version to PyPI
 ---------------------------
 
-This section describes how to release a version of {{ cookiecutter.project_name }}
+This section describes how to release a version of [[ cookiecutter.project_name ]]
 to PyPI.
 
 It covers all variants of versions that can be released:
@@ -341,12 +341,12 @@ It covers all variants of versions that can be released:
 * Releasing a new update version (M.N.Unew) based on the stable branch of its
   minor version
 
-The description assumes that the `{{ cookiecutter.github_org }}/{{ cookiecutter.github_repo }}`
+The description assumes that the `[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]`
 Github repo is cloned locally and its upstream repo is assumed to have the Git
 remote name `origin`.
 
 Any commands in the following steps are executed in the main directory of your
-local clone of the `{{ cookiecutter.github_org }}/{{ cookiecutter.github_repo }}`
+local clone of the `[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]`
 Git repo.
 
 1.  Set shell variables for the version that is being released and the branch
@@ -396,7 +396,7 @@ Git repo.
 
     .. code-block:: sh
 
-        vi {{ cookiecutter.package_name }}/_version.py
+        vi [[ cookiecutter.python_package_name ]]/_version.py
 
     and set the ``__version__`` variable to the version that is being released:
 
@@ -492,14 +492,14 @@ Git repo.
 
 13. On ReadTheDocs, activate the new version ``M.N.U``:
 
-    * Go to https://readthedocs.org/projects/{{ cookiecutter.package_name }}/versions/
+    * Go to https://readthedocs.org/projects/<readthedocs_name>/versions/
       and log in.
 
     * Activate the new version ``M.N.U``.
 
       This triggers a build of that version. Verify that the build succeeds
       and that new version is shown in the version selection popup at
-      https://{{ cookiecutter.package_name }}.readthedocs.io/
+      https://<readthedocs_name>.readthedocs.io/
 
 14. Upload the package to PyPI:
 
@@ -513,14 +513,14 @@ Git repo.
     the same version twice to PyPI.
 
     Verify that the released version arrived on PyPI at
-    https://pypi.python.org/pypi/{{ cookiecutter.package_name }}/
+    https://pypi.python.org/pypi/[[ cookiecutter.pypi_package_name ]]/
 
 
 Starting a new version
 ----------------------
 
 This section shows the steps for starting development of a new version of the
-{{ cookiecutter.project_name }} project in its Git repo.
+[[ cookiecutter.project_name ]] project in its Git repo.
 
 This section covers all variants of new versions:
 
@@ -529,12 +529,12 @@ This section covers all variants of new versions:
 * Starting a new update version (M.N.Unew) based on the stable branch of its
   minor version
 
-The description assumes that the `{{ cookiecutter.github_org }}/{{ cookiecutter.github_repo }}`
+The description assumes that the `[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]`
 Github repo is cloned locally and its upstream repo is assumed to have the Git
 remote name `origin`.
 
 Any commands in the following steps are executed in the main directory of your
-local clone of the `{{ cookiecutter.github_org }}/{{ cookiecutter.github_repo }}`
+local clone of the `[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]`
 Git repo.
 
 1.  Set shell variables for the version that is being started and the branch it
@@ -584,7 +584,7 @@ Git repo.
 
     .. code-block:: sh
 
-        vi {{ cookiecutter.package_name }}/_version.py
+        vi [[ cookiecutter.python_package_name ]]/_version.py
 
     and update the version to a draft version of the version that is being
     started:
@@ -603,7 +603,7 @@ Git repo.
 
     .. code-block:: rst
 
-        {{ cookiecutter.package_name }} M.N.U.dev1
+        [[ cookiecutter.pypi_package_name ]] M.N.U.dev1
         ----------------------------
 
         This version contains all fixes up to version M.N-1.x.
@@ -624,7 +624,7 @@ Git repo.
 
         * See `list of open issues`_.
 
-        .. _`list of open issues`: https://github.com/{{ cookiecutter.github_org }}/{{ cookiecutter.github_repo }}/issues
+        .. _`list of open issues`: https://github.com/[[ cookiecutter.github_org ]]/[[ cookiecutter.github_repo ]]/issues
 
 5.  Commit your changes and push them to the remote repo:
 
