@@ -11,8 +11,9 @@
 /build_doc/
 /dist/
 /try/
+/done/*.done
+/coverage_html/
 .ipynb_checkpoints/
-/*.done
 *.pyc
 *.pyo
 *.log
@@ -22,7 +23,6 @@ tmp.*
 .*~
 *.py,cover
 .coverage
-/coverage_html/
 MANIFEST
 MANIFEST.in
 cprofilerstats*.profile

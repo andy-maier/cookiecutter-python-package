@@ -1,0 +1,57 @@
+# Safety policy file for packages needed for development.
+# For documentation, see https://docs.pyup.io/docs/safety-20-policy-file
+
+# Note: This policy file is used against the versions in minimum-constraints-develop.txt.
+
+# Configuration for the 'safety check' command
+security:
+
+    # Ignore certain severities.
+    # A number between 0 and 10, with the following significant values:
+    # - 9: ignore all vulnerabilities except CRITICAL severity
+    # - 7: ignore all vulnerabilities except CRITICAL & HIGH severity
+    # - 4: ignore all vulnerabilities except CRITICAL, HIGH & MEDIUM severity
+    ignore-cvss-severity-below: 0
+
+    # Ignore unknown severities.
+    # Should be set to False.
+    ignore-cvss-unknown-severity: False
+
+    # Ignore unpinned requirements.
+    # Default is true. "Unpinned" in this case means anything else but "==".
+    # Since we are checking against the minimum-constraints file, this check
+    # is enabled (false).
+    ignore-unpinned-requirements: False
+
+    # List of specific vulnerabilities to ignore.
+    # {id}:                 # vulnerability ID
+    #     reason: {text}    # optional: Reason for ignoring it. Will be reported in the Safety reports
+    #     expires: {date}   # optional: Date when this ignore will expire
+    ignore-vulnerabilities:
+        70612:
+            reason: Disputed issue in jinja2 version 3.1.3 - No known fix
+        79993:
+            reason: Fixed jupyterlab version 4.4.8 requires Python>=3.9 and other upgrades
+        82754:
+            reason: Fixed filelock version 3.20.1 requires Python>=3.10 and is used there
+        84183:
+            reason: Fixed filelock version 3.20.3 requires Python>=3.10 and is used there
+        84415:
+            reason: Fixed filelock version 3.20.3 requires Python>=3.10 and is used there
+        89481:
+            reason: Fixed authlib version 1.6.9 requires Python>=3.10 and is used there
+        89032:
+            reason: Fixed tornado version 6.5.5 requires Python>=3.10 and is used there
+        89826:
+            reason: Fixed nltk version 3.9.4 requires Python>=3.10 and is used there
+        90749:
+            reason: Fixed cryptography version 46.0.6 requires Python>=3.10 and is used there
+        35073:
+           reason: Fixed pygments version 2.20.0 requires Python>=3.10 and is used there
+
+        # Need to comment out due to issue https://github.com/pyupio/safety/issues/847
+        # SFTY-20260218-01424:
+        #     reason: Fixed nltk version 3.9.3 requires Python>=3.10 and is used there
+
+    # Continue with exit code 0 when vulnerabilities are found.
+    continue-on-vulnerability-error: False

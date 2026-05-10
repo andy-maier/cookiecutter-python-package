@@ -1,0 +1,14 @@
+# ------------------------------------------------------------------------------
+# Pip requirements file for base dependencies.
+#
+# Base packages are those needed for pip and automatic package version detection.
+
+
+# ------------------------------------------------------------------------------
+# Base dependencies.
+# Must be consistent with minimum-constraints-install.txt and build-system.requires in pyproject.toml.
+
+pip>=26.0
+setuptools>=78.1.1
+setuptools-scm[toml]>=9.2.0
+wheel>=0.46.2

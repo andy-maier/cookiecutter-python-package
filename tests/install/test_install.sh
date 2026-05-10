@@ -7,7 +7,8 @@
 DEBUG="false"
 VERBOSE="true"
 
-PACKAGE_NAME={{ cookiecutter.package_name }}
+PYPI_PACKAGE_NAME=[[ cookiecutter.pypi_package_name ]]
+PYTHON_PACKAGE_NAME=[[ cookiecutter.python_package_name ]]
 
 function abspath()
 {
@@ -62,19 +63,19 @@ VIRTUALENV_DIR="${TMP_TEST_DIR}/virtualenvs"
 SRC_DISTFILE_UNPACK_DIR="${TMP_TEST_DIR}/src_dist"
 
 # Top directory within source dist archive, in which there is setup.py
-SRC_DISTFILE_TOP_DIR="${PACKAGE_NAME}-${PACKAGE_VERSION}"
+SRC_DISTFILE_TOP_DIR="${PYPI_PACKAGE_NAME}-${PACKAGE_VERSION}"
 
 # Path of .egg file created in dist directory by setup.py, as seen by caller
-EGG_FILE="${ROOT_DIR}/dist/${PACKAGE_NAME}*.egg"
+EGG_FILE="${ROOT_DIR}/dist/${PYPI_PACKAGE_NAME}*.egg"
 
 # Path of log file for each command, as seen by caller
 CMD_LOG_FILE="${TMP_TEST_DIR}/cmd.log"
 
 # Prefix for Python virtualenv names
-ENVPREFIX="${PACKAGE_NAME}_test_"
+ENVPREFIX="${PYPI_PACKAGE_NAME}_test_"
 
 # Path of package version file, as seen by caller
-PACKAGE_VERSION_FILE="${ROOT_DIR}/${PACKAGE_NAME}/_version.py"
+PACKAGE_VERSION_FILE="${ROOT_DIR}/${PYTHON_PACKAGE_NAME}/_version.py"
 
 # Package version (full version, as specified in package version file)
 PACKAGE_VERSION=$(grep -E '^ *__version__ *= ' ${PACKAGE_VERSION_FILE} | sed -E "s/__version__ *= *'(.*)' */\1/")
@@ -355,7 +356,7 @@ function assert_import_fails()
 function ensure_fresh()
 {
   verbose "Ensuring the relevant Python packages are uninstalled."
-  ensure_uninstalled "${PACKAGE_NAME}"
+  ensure_uninstalled "${PYPI_PACKAGE_NAME}"
 }
 
 #-------------------------------------------------
@@ -415,7 +416,7 @@ function test1()
 
   call "cd ${ROOT_DIR}; pip install . $PIP_OPTS" "Installing with pip from repo root directory (PACKAGE_LEVEL=$PACKAGE_LEVEL)"
 
-  assert_import_ok "${PACKAGE_NAME}"
+  assert_import_ok "${PYTHON_PACKAGE_NAME}"
   remove_virtualenv "$testcase"
   cleanup_egg_file
 }
@@ -428,7 +429,7 @@ function test2()
 
   call "cd ${ROOT_DIR}; python setup.py install" "Installing with setup.py from repo root directory (latest package levels)"
 
-  assert_import_ok "${PACKAGE_NAME}"
+  assert_import_ok "${PYTHON_PACKAGE_NAME}"
   remove_virtualenv "$testcase"
   cleanup_egg_file
 }
@@ -441,7 +442,7 @@ function test3()
 
   call "cd ${TMP_TEST_DIR}; pip install $(abspath $WHL_DISTFILE) $PIP_OPTS" "Installing with pip from wheel distribution archive (PACKAGE_LEVEL=$PACKAGE_LEVEL)"
 
-  assert_import_ok "${PACKAGE_NAME}"
+  assert_import_ok "${PYTHON_PACKAGE_NAME}"
   remove_virtualenv "$testcase"
   cleanup_egg_file
 }
@@ -454,7 +455,7 @@ function test4()
 
   call "cd ${TMP_TEST_DIR}; pip install $(abspath $SRC_DISTFILE) $PIP_OPTS" "Installing with pip from source distribution archive (PACKAGE_LEVEL=$PACKAGE_LEVEL)"
 
-  assert_import_ok "${PACKAGE_NAME}"
+  assert_import_ok "${PYTHON_PACKAGE_NAME}"
   remove_virtualenv "$testcase"
   cleanup_egg_file
 }
@@ -468,7 +469,7 @@ function test5()
 
   call "cd $SRC_DISTFILE_UNPACK_DIR/$SRC_DISTFILE_TOP_DIR; python setup.py install" "Installing with setup.py from unpack directory: $SRC_DISTFILE_UNPACK_DIR/$SRC_DISTFILE_TOP_DIR (latest package levels)"
 
-  assert_import_ok "${PACKAGE_NAME}"
+  assert_import_ok "${PYTHON_PACKAGE_NAME}"
   remove_virtualenv "$testcase"
   cleanup_egg_file
 }
