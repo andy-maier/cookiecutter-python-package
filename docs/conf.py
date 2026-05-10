@@ -129,7 +129,7 @@ language = 'en'
 # directories to ignore when looking for source files.
 exclude_patterns = [".tox", ".git",
                     "{[ cookiecutter.pypi_package_name ]}.egg-info", ".eggs",
-                    "README.rst", "INSTALL.md", "build", "build_doc", "design",
+                    "README.md", "INSTALL.md", "build", "build_doc", "design",
                     "dist", "tests", "try", "attic"]
 
 # The reST default role (used for this markup: `text`) to use for all
