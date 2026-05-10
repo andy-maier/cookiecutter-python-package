@@ -179,7 +179,9 @@ check_py_files := \
 {%- if cookiecutter.with_end2end_test == "Yes" %}
     $(test_end2end_py_files) \
 {%- endif %}
+{%- if cookiecutter.with_readthedocs == "Yes" %}
     $(doc_conf_dir)/conf.py \
+{%- endif %}
 {%- if cookiecutter.with_jupyter_notebook == "Yes" %}
     $(wildcard docs/notebooks/*.py) \
 {%- endif %}
@@ -289,7 +291,7 @@ help:
 _always:
 
 .PHONY: all
-all: install develop flake8 ruff pylint check_reqs safety bandit unittest functiontest installtest build{%- if cookiecutter.with_readthedocs == "Yes" -%} builddoc doclinkcheck{%- endif -%}
+all: install develop flake8 ruff pylint check_reqs safety bandit unittest functiontest{%- if cookiecutter.with_install_test == "Yes" %} installtest{%- endif %} build{%- if cookiecutter.with_readthedocs == "Yes" %} builddoc doclinkcheck{%- endif %}
 	@echo "Makefile: $@ done."
 
 .PHONY: test
@@ -447,6 +449,7 @@ functiontest: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_fil
 	coverage html
 	@echo "Makefile: $@ done."
 
+{%- if cookiecutter.with_install_test == "Yes" %}
 .PHONY: installtest
 installtest: $(bdist_file) $(sdist_file) $(test_dir)/install/test_install.sh
 ifeq ($(PLATFORM),Windows_native)
@@ -458,6 +461,7 @@ else
 endif
 	@echo "Makefile: $@ done."
 
+{%- endif %}
 {%- if cookiecutter.with_end2end_test == "Yes" %}
 .PHONY:	end2end
 end2end: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $(test_end2end_py_files) $(coverage_config_file)
@@ -543,7 +547,10 @@ clean:
 clobber: clean
 	rm -f $(bdist_file) $(sdist_file)
 	find . -type f -name '*.done' -delete
-	rm -rf $(doc_build_dir) htmlcov .tox
+{%- if cookiecutter.with_readthedocs == "Yes" %}
+	rm -rf $(doc_build_dir)
+{%- endif %}
+	rm -rf htmlcov .tox
 	@echo "Makefile: $@ done."
 
 .PHONY: release_branch
