@@ -103,7 +103,7 @@ The `tests` directory has the following subdirectory structure:
 
     tests
      +-- unittest            Unit tests
-{%- if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test == "Yes" %}
      +-- end2endtest         End2end tests
 {%- endif %}
 
@@ -132,7 +132,7 @@ There are multiple types of tests:
 
    Options for pytest can be passed using the ``--pytest-options`` option.
 
-{%- if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test == "Yes" %}
 2. End2end tests
 
    These tests are run ... (describe) ..., and the tests validate
@@ -235,7 +235,7 @@ These commands are listed in the help of the ``setup.py`` script:
     Extra commands:
       . . .
       test              Run unit tests using pytest
-{%- if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test == "Yes" %}
       end2endtest       Run end2end tests using pytest
 {%- endif %}
       . . .
@@ -257,7 +257,7 @@ Note: The ``test`` command of ``setup.py`` is not the deprecated built-in
 command (see `<https://github.com/pypa/setuptools/issues/1684>`_), but has been
 implemented in ``setup.py`` in such a way that it only runs the tests but
 does not install anything upfront.
-{%- if cookiecutter.with_end2end_test %}
+{%- if cookiecutter.with_end2end_test == "Yes" %}
 The ``end2endtest`` command has been implemented in the same way.
 {%- endif %}
 Therefore, this approach can be used for testing in Linux distributions that

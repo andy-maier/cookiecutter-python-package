@@ -3,7 +3,7 @@
 
 Change log
 ==========
-{%- if cookiecutter.with_changelog %}
+{%- if cookiecutter.with_changelog == "Yes" %}
 
 .. ============================================================================
 ..
