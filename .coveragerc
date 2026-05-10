@@ -7,13 +7,13 @@
 
 # Directories to include in the coverage.
 source_dirs =
-    {[ cookiecutter.python_package_name ]}/
+    src/{[ cookiecutter.python_package_name ]}/
 
 # Files and directories to exclude in the coverage.
 # For coveralls.io, tests/ also needs to be excluded even though it is not
 # in source_dirs.
 omit =
-    {[ cookiecutter.python_package_name ]}/_vendor/*
+    src/{[ cookiecutter.python_package_name ]}/_vendor/*
     tests/*
 
 # Controls whether branch coverage is measured, vs. just statement coverage.

@@ -17,6 +17,7 @@ build-backend = "setuptools.build_meta"
 platforms = ["any"]
 script-files = []
 zip-safe = true
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 # setuptools needs all sub-packages to be specified as well to avoid the
@@ -24,6 +25,7 @@ zip-safe = true
 # of packages including sub-packages, or by specifying 'packages.find' with
 # wildcards. The strings in 'packages.find' are matched using glob pattern
 # matching against the package path.
+where = ["src"]
 include = ["{[ cookiecutter.python_package_name ]}", "{[ cookiecutter.python_package_name ]}.*"]
 
 [project]
@@ -58,7 +60,7 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 requires-python = ">=3.9"
-dynamic = ["version", "dependencies", "optional-dependencies"]
+dynamic = ["version", "dependencies"]
 
 [project.urls]
 Homepage = "https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}"
@@ -72,13 +74,6 @@ Changelog = "https://<readthedocs_name>.readthedocs.io/en/master/changes.html"
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
 
-[tool.setuptools.dynamic.optional-dependencies]
-testutils = {file = ['extra-testutils-requirements.txt']}
-
 [tool.setuptools_scm]
 # Get the version from the Git tag, and write a version file:
-version_file = "{[ cookiecutter.python_package_name ]}/_version_scm.py"
-
-[project.entry-points.pytest11]
-# Pytest plugin with fixtures (required for fixtures with session scope).
-{[ cookiecutter.python_package_name ]}-testutils = "{[ cookiecutter.python_package_name ]}.testutils"
+version_file = "src/{[ cookiecutter.python_package_name ]}/_version_scm.py"

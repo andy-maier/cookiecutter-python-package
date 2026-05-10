@@ -6,9 +6,10 @@
 /.tox/
 /.virtualenv/
 /tmp_*/
-/*.egg-info/
 /build/
 /build_doc/
+/src/*/_version_scm.py
+/src/*.egg-info/
 /dist/
 /try/
 /done/*.done

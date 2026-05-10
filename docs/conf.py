@@ -9,6 +9,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+# flake8: noqa: E265
+# pylint: disable=invalid-name
+
 """
 Config file for Sphinx.
 """
@@ -312,7 +315,7 @@ html_extra_path = ['_extra']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = project+'_doc'
+htmlhelp_basename = project + '_doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -334,7 +337,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, project+'.tex', _short_description, author, 'manual'),
+    (master_doc, project + '.tex', _short_description, author, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

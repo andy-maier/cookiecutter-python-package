@@ -62,10 +62,7 @@ VIRTUALENV_DIR="${TMP_TEST_DIR}/virtualenvs"
 # Must be under TMP_TEST_DIR
 SRC_DISTFILE_UNPACK_DIR="${TMP_TEST_DIR}/src_dist"
 
-# Top directory within source dist archive, in which there is setup.py
-SRC_DISTFILE_TOP_DIR="${PYPI_PACKAGE_NAME}-${PACKAGE_VERSION}"
-
-# Path of .egg file created in dist directory by setup.py, as seen by caller
+# Path of .egg file created during build, for cleaning up
 EGG_FILE="${ROOT_DIR}/dist/${PYPI_PACKAGE_NAME}*.egg"
 
 # Path of log file for each command, as seen by caller
@@ -421,19 +418,6 @@ function test1()
   cleanup_egg_file
 }
 
-function test2()
-{
-  testcase="test2"
-  info "Testcase $testcase: setup.py install from repo root directory: ${ROOT_DIR}"
-  make_virtualenv "$testcase"
-
-  call "cd ${ROOT_DIR}; python setup.py install" "Installing with setup.py from repo root directory (latest package levels)"
-
-  assert_import_ok "${PYTHON_PACKAGE_NAME}"
-  remove_virtualenv "$testcase"
-  cleanup_egg_file
-}
-
 function test3()
 {
   testcase="test3"
@@ -454,20 +438,6 @@ function test4()
   make_virtualenv "$testcase"
 
   call "cd ${TMP_TEST_DIR}; pip install $(abspath $SRC_DISTFILE) $PIP_OPTS" "Installing with pip from source distribution archive (PACKAGE_LEVEL=$PACKAGE_LEVEL)"
-
-  assert_import_ok "${PYTHON_PACKAGE_NAME}"
-  remove_virtualenv "$testcase"
-  cleanup_egg_file
-}
-
-function test5()
-{
-  testcase="test5"
-  info "Testcase $testcase: setup.py install from unpacked source distribution archive: $SRC_DISTFILE"
-  make_virtualenv "$testcase"
-  run "tar -x -v -f $SRC_DISTFILE -C $SRC_DISTFILE_UNPACK_DIR" "Unpacking source distribution archive to: $SRC_DISTFILE_UNPACK_DIR"
-
-  call "cd $SRC_DISTFILE_UNPACK_DIR/$SRC_DISTFILE_TOP_DIR; python setup.py install" "Installing with setup.py from unpack directory: $SRC_DISTFILE_UNPACK_DIR/$SRC_DISTFILE_TOP_DIR (latest package levels)"
 
   assert_import_ok "${PYTHON_PACKAGE_NAME}"
   remove_virtualenv "$testcase"
@@ -500,10 +470,8 @@ fi
 prep
 
 test1
-test2
 test3
 test4
-test5
 
 cleanup
 
