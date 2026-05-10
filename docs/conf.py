@@ -68,7 +68,7 @@ else:
     master_doc = 'docs/index'
 
 # General information about the project.
-project = "{[ cookiecutter.pypi_project_name ]}"
+project = "{[ cookiecutter.project_name ]}"
 #copyright = ''
 author = "{[ cookiecutter.author_full_name.replace('\"', '\\\"') ]}"
 
@@ -105,7 +105,7 @@ else:
 
 # Some prints, for extra information
 print(f"conf.py: pwd: {os.getcwd()}")
-print(f"conf.py: {[ cookiecutter.pypi_project_name ]} version: {version}")
+print(f"conf.py: {[ cookiecutter.pypi_package_name ]} version: {version}")
 print("conf.py: Last 5 commits:")
 sys.stdout.flush()
 os.system('git log --decorate --oneline | head -5')
@@ -128,7 +128,7 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = [".tox", ".git",
-                    "{[ cookiecutter.pypi_project_name ]}.egg-info", ".eggs",
+                    "{[ cookiecutter.pypi_package_name ]}.egg-info", ".eggs",
                     "README.rst", "INSTALL.md", "build", "build_doc", "design",
                     "dist", "tests", "try", "attic"]
 
