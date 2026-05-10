@@ -64,10 +64,10 @@ dynamic = ["version", "dependencies", "optional-dependencies"]
 Homepage = "https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}"
 "Bug Tracker" = "https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/issues"
 "Source Code" = "https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}"
-{% if cookiecutter.with_readthedocs == "Yes" %}
+{%- if cookiecutter.with_readthedocs %}
 Documentation = "https://<readthedocs_name>.readthedocs.io"
 Changelog = "https://<readthedocs_name>.readthedocs.io/en/master/changes.html"
-{% endif %}
+{%- endif %}
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
