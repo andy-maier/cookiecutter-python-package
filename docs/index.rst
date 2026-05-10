@@ -1,5 +1,5 @@
 
-[[ cookiecutter.project_name ]] - [[ cookiecutter.short_description ]]
+{[ cookiecutter.project_name ]} - {[ cookiecutter.short_description ]}
 ********************************************************************************
 
 TBD: Some overview text

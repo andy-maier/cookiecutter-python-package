@@ -7,8 +7,8 @@
 DEBUG="false"
 VERBOSE="true"
 
-PYPI_PACKAGE_NAME=[[ cookiecutter.pypi_package_name ]]
-PYTHON_PACKAGE_NAME=[[ cookiecutter.python_package_name ]]
+PYPI_PACKAGE_NAME={[ cookiecutter.pypi_package_name ]}
+PYTHON_PACKAGE_NAME={[ cookiecutter.python_package_name ]}
 
 function abspath()
 {

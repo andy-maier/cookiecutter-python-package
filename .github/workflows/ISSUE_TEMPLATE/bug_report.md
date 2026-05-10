@@ -18,6 +18,6 @@ assignees: ''
 
 **Environment information**
 
-* [[ cookiecutter.pypi_package_name ]] version:
+* {[ cookiecutter.pypi_package_name ]} version:
 * Python version:
 * Operating System type and version:

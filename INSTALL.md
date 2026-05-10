@@ -1,18 +1,18 @@
 Installation
 ============
 
-[% if cookiecutter.package_type == 'Library' %]
+{% if cookiecutter.package_type == 'Library' %}
 To install the latest released version of the
-[[ cookiecutter.project_name ]] project into your active Python environment:
+{[ cookiecutter.project_name ]} project into your active Python environment:
 
-      $ pip install [[ cookiecutter.pypi_package_name ]]
-[% else %][# CLI #]
+      $ pip install {[ cookiecutter.pypi_package_name ]}
+{% else %}{# CLI #}
 To install the latest released version of the
-[[ cookiecutter.project_name ]] project into your system without having any
+{[ cookiecutter.project_name ]} project into your system without having any
 virtual Python environment active:
 
-      $ pipx install [[ cookiecutter.pypi_package_name ]]
-[% endif %]
+      $ pipx install {[ cookiecutter.pypi_package_name ]}
+{% endif %}
 
 This will also install any prerequisite Python packages.
 
