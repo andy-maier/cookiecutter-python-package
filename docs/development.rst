@@ -102,14 +102,18 @@ The `tests` directory has the following subdirectory structure:
 ::
 
     tests
-     +-- unittest            Unit tests
 {%- if cookiecutter.with_end2end_test == "Yes" %}
-     +-- end2endtest         End2end tests
+     +-- end2end             End2end tests
 {%- endif %}
+     +-- function            Function tests
+{%- if cookiecutter.with_install_test == "Yes" %}
+     +-- install             Install tests
+{%- endif %}
+     +-- unit                Unit tests
 
 There are multiple types of tests:
 
-1. Unit tests
+1. Unit and function tests
 
    These tests can be run standalone, and the tests validate their results
    automatically.
