@@ -375,33 +375,27 @@ flake8: $(done_dir)/flake8_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
 $(done_dir)/flake8_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(flake8_rc_file) $(check_py_files)
-	@echo "Makefile: Running Flake8"
 	rm -f $@
 	flake8 $(check_py_files)
 	echo "done" >$@
-	@echo "Makefile: Done running Flake8"
 
 .PHONY: ruff
 ruff: $(done_dir)/ruff_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
 $(done_dir)/ruff_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(ruff_rc_file) $(check_py_files)
-	@echo "Makefile: Running Ruff"
 	rm -f $@
 	ruff check --unsafe-fixes --config $(ruff_rc_file) $(check_py_files)
 	echo "done" >$@
-	@echo "Makefile: Done running Ruff"
 
 .PHONY: pylint
 pylint: $(done_dir)/pylint_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
 $(done_dir)/pylint_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(pylint_rc_file) $(check_py_files)
-	@echo "Makefile: Running Pylint"
 	rm -f $@
 	pylint $(pylint_opts) --rcfile=$(pylint_rc_file) --output-format=text $(check_py_files)
 	echo "done" >$@
-	@echo "Makefile: Done running Pylint"
 
 .PHONY: check_reqs
 check_reqs: $(done_dir)/check_reqs_$(pymn)_$(PACKAGE_LEVEL).done
@@ -436,21 +430,19 @@ bandit: $(done_dir)/bandit_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
 $(done_dir)/bandit_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(bandit_rc_file) $(check_py_files)
-	@echo "Makefile: Running Bandit"
 	rm -f $@
 	bandit -c $(bandit_rc_file) -l -r $(python_package_name)
 	echo "done" >$@
-	@echo "Makefile: Done running Bandit"
 
 .PHONY: unittest
 unittest: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $(test_unit_py_files) $(coverage_config_file)
-	PYTHONPATH=. coverage run --append -m pytest $(pytest_general_opts) $(pytest_test_opts) $(test_dir)/unit
+	PYTHONPATH=src coverage run --append -m pytest $(pytest_general_opts) $(pytest_test_opts) $(test_dir)/unit
 	coverage html
 	@echo "Makefile: $@ done."
 
 .PHONY: functiontest
 functiontest: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $(test_function_py_files) $(coverage_config_file)
-	PYTHONPATH=. coverage run --append -m pytest $(pytest_general_opts) $(pytest_test_opts) $(test_dir)/function
+	PYTHONPATH=src coverage run --append -m pytest $(pytest_general_opts) $(pytest_test_opts) $(test_dir)/function
 	coverage html
 	@echo "Makefile: $@ done."
 
@@ -471,7 +463,7 @@ endif
 .PHONY:	end2end
 end2end: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $(test_end2end_py_files) $(coverage_config_file)
 	rm -f end2end.log
-	PYTHONPATH=. TESTLOGFILE=end2end.log TESTEND2END_LOAD=true coverage run --append -m pytest -v -m 'not check_hmcs' $(pytest_general_opts) $(pytest_test_opts) $(test_dir)/end2end
+	PYTHONPATH=src coverage run --append -m pytest -v -m 'not check_hmcs' $(pytest_general_opts) $(pytest_test_opts) $(test_dir)/end2end
 	coverage html
 	tools/check_blanked.py --accept-null end2end.log
 	@echo "Makefile: $@ done."
@@ -499,18 +491,13 @@ builddoc: $(doc_build_dir)/html/docs/index.html
 	@echo "Makefile: $@ done."
 
 $(doc_build_dir)/html/docs/index.html: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(doc_dependent_files)
-	@echo "Makefile: Running Sphinx to create HTML pages"
 	rm -f $@
 	$(doc_cmd) -b html $(doc_opts) $(doc_build_dir)/html
-	@echo
-	@echo "Makefile: Done running Sphinx to create HTML pages"
 
 .PHONY: doclinkcheck
 doclinkcheck: $(doc_dependent_files)
-	@echo "Makefile: Running Sphinx to check the doc links"
 	$(doc_cmd) -b linkcheck $(doc_opts) $(doc_build_dir)/linkcheck; rc=$$?; if [ $$rc -ne 0 ]; then echo "::notice::doclinkcheck failed (ignored)"; fi
 	@echo
-	@echo "Makefile: Done running Sphinx to check the doc links"
 	@echo "Makefile: Look for any errors in the above output or in: $(doc_build_dir)/linkcheck/output.txt"
 	@echo "Makefile: $@ done."
 
