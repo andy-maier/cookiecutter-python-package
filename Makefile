@@ -70,6 +70,9 @@ pypi_package_name := {[ cookiecutter.pypi_package_name ]}
 # Name of the Python package used for importing
 python_package_name := {[ cookiecutter.python_package_name ]}
 
+# Package directory
+package_dir := src/$(python_package_name)
+
 # Package version (e.g. "1.8.0a1.dev10+gd013028e" during development, or "1.8.0"
 # when releasing).
 # Note: The package version is automatically calculated by setuptools-scm based
@@ -79,7 +82,7 @@ package_version := $(shell $(PYTHON_CMD) -m setuptools_scm)
 
 # The version file is recreated by setuptools-scm on every build, so it is
 # excluded from git, and also from some dependency lists.
-version_file := $(python_package_name)/_version_scm.py
+version_file := $(package_dir)/_version_scm.py
 
 # Python major and minor version as a short identifier
 pymn := $(shell $(PYTHON_CMD) -c "import sys; sys.stdout.write(f'py{sys.version_info[0]}{sys.version_info[1]}')")
@@ -88,11 +91,11 @@ pymn := $(shell $(PYTHON_CMD) -c "import sys; sys.stdout.write(f'py{sys.version_
 dist_dir := dist
 
 # Distribution archives (as built by 'build' tool)
-bdist_file := $(dist_dir)/$(pypi_package_name)-$(package_version)-py3-none-any.whl
-sdist_file := $(dist_dir)/$(pypi_package_name)-$(package_version).tar.gz
+bdist_file := $(dist_dir)/$(subst .,_,$(subst -,_,$(pypi_package_name)))-$(package_version)-py3-none-any.whl
+sdist_file := $(dist_dir)/$(subst -,_,$(pypi_package_name))-$(package_version).tar.gz
 
 # Vendorized files
-vendor_dir := $(python_package_name)/_vendor
+vendor_dir := $(package_dir)/_vendor
 vendor_py_files := \
     $(wildcard $(vendor_dir)/*.py) \
     $(wildcard $(vendor_dir)/*/*.py) \
@@ -100,11 +103,11 @@ vendor_py_files := \
 
 # Source files in the packages, excluding the $(version_file)
 package_py_files := \
-    $(filter-out $(version_file), $(wildcard $(python_package_name)/*.py)) \
-    $(wildcard $(python_package_name)/*/*.py) \
-    $(wildcard $(python_package_name)/*/*/*.py) \
+    $(filter-out $(version_file), $(wildcard $(package_dir)/*.py)) \
+    $(wildcard $(package_dir)/*/*.py) \
+    $(wildcard $(package_dir)/*/*/*.py) \
 
-{%- if cookiecutter.with_readthedocs == "Yes" %}
+{% if cookiecutter.with_readthedocs == "Yes" %}
 # Directory for generated API documentation
 doc_build_dir := build_doc
 
@@ -127,7 +130,7 @@ doc_dependent_files := \
     $(package_py_files) \
     $(version_file) \
 
-{%- endif %}
+{% endif %}
 # Directory with test source files
 test_dir := tests
 
@@ -142,13 +145,13 @@ test_function_py_files := \
     $(wildcard $(test_dir)/function/*/*.py) \
 		$(wildcard $(test_dir)/function/*/*/*.py) \
 
-{%- if cookiecutter.with_end2end_test == "Yes" %}
+{% if cookiecutter.with_end2end_test == "Yes" %}
 test_end2end_py_files := \
     $(wildcard $(test_dir)/end2end/*.py) \
     $(wildcard $(test_dir)/end2end/*/*.py) \
     $(wildcard $(test_dir)/end2end/*/*/*.py) \
 
-{%- endif %}
+{% endif %}
 # Directory for .done files
 done_dir := done
 
@@ -298,7 +301,7 @@ all: install develop flake8 ruff pylint check_reqs safety bandit unittest functi
 test: unittest functiontest
 
 .PHONY: check
-test: flake8 ruff pylint
+check: flake8 ruff pylint
 
 .PHONY: platform
 platform:
@@ -337,7 +340,7 @@ pip_list:
 	@echo "Makefile: Python packages as seen by make:"
 	$(PIP_CMD) list
 
-$(done_dir)/base_$(pymn)_$(PACKAGE_LEVEL).done: Makefile requirements-base.txt minimum-constraints-develop.txt minimum-constraints-install.txt
+$(done_dir)/base_$(pymn)_$(PACKAGE_LEVEL).done: requirements-base.txt minimum-constraints-develop.txt minimum-constraints-install.txt
 	rm -f $@
 	@echo "Makefile: Installing/upgrading pip, setuptools and wheel with PACKAGE_LEVEL=$(PACKAGE_LEVEL)"
 	$(PYTHON_CMD) -m pip install $(pip_level_opts) -r requirements-base.txt
@@ -347,7 +350,7 @@ $(done_dir)/base_$(pymn)_$(PACKAGE_LEVEL).done: Makefile requirements-base.txt m
 install: $(done_dir)/install_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
-$(done_dir)/install_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/base_$(pymn)_$(PACKAGE_LEVEL).done requirements.txt minimum-constraints-develop.txt minimum-constraints-install.txt $(dist_dependent_files)
+$(done_dir)/install_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/base_$(pymn)_$(PACKAGE_LEVEL).done requirements.txt minimum-constraints-develop.txt minimum-constraints-install.txt $(dist_dependent_files)
 	rm -f $@
 	@echo "Makefile: Installing $(pypi_package_name) (non-editable) and runtime reqs with PACKAGE_LEVEL=$(PACKAGE_LEVEL)"
 	$(PYTHON_CMD) -m pip install $(pip_level_opts) $(pip_level_opts_new) .
@@ -358,7 +361,7 @@ $(done_dir)/install_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/base_$(p
 develop: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
-$(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/base_$(pymn)_$(PACKAGE_LEVEL).done requirements-develop.txt minimum-constraints-develop.txt minimum-constraints-install.txt
+$(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/base_$(pymn)_$(PACKAGE_LEVEL).done requirements-develop.txt minimum-constraints-develop.txt minimum-constraints-install.txt
 	rm -f $@
 	@echo "Makefile: Installing development requirements with PACKAGE_LEVEL=$(PACKAGE_LEVEL)"
 	$(PYTHON_CMD) -m pip install $(pip_level_opts) $(pip_level_opts_new) -r requirements-develop.txt
@@ -369,7 +372,7 @@ $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/base_$(p
 flake8: $(done_dir)/flake8_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
-$(done_dir)/flake8_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(flake8_rc_file) $(check_py_files)
+$(done_dir)/flake8_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(flake8_rc_file) $(check_py_files)
 	@echo "Makefile: Running Flake8"
 	rm -f $@
 	flake8 $(check_py_files)
@@ -380,7 +383,7 @@ $(done_dir)/flake8_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$
 ruff: $(done_dir)/ruff_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
-$(done_dir)/ruff_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(ruff_rc_file) $(check_py_files)
+$(done_dir)/ruff_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(ruff_rc_file) $(check_py_files)
 	@echo "Makefile: Running Ruff"
 	rm -f $@
 	ruff check --unsafe-fixes --config $(ruff_rc_file) $(check_py_files)
@@ -391,7 +394,7 @@ $(done_dir)/ruff_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$(p
 pylint: $(done_dir)/pylint_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
-$(done_dir)/pylint_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(pylint_rc_file) $(check_py_files)
+$(done_dir)/pylint_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(pylint_rc_file) $(check_py_files)
 	@echo "Makefile: Running Pylint"
 	rm -f $@
 	pylint $(pylint_opts) --rcfile=$(pylint_rc_file) --output-format=text $(check_py_files)
@@ -402,7 +405,7 @@ $(done_dir)/pylint_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$
 check_reqs: $(done_dir)/check_reqs_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
-$(done_dir)/check_reqs_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done minimum-constraints-develop.txt minimum-constraints-install.txt requirements.txt
+$(done_dir)/check_reqs_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done minimum-constraints-develop.txt minimum-constraints-install.txt requirements.txt
 	rm -f $@
 	@echo "Makefile: Checking missing dependencies of this package"
 	pip-missing-reqs $(pypi_package_name) --ignore-module $(python_package_name) --requirements-file=requirements.txt
@@ -421,7 +424,7 @@ endif
 	echo "done" >$@
 
 .PHONY: safety
-safety: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(safety_develop_policy_file) $(safety_install_policy_file) minimum-constraints-develop.txt minimum-constraints-install.txt
+safety: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(safety_develop_policy_file) $(safety_install_policy_file) minimum-constraints-develop.txt minimum-constraints-install.txt
 	safety check --policy-file $(safety_develop_policy_file) -r minimum-constraints-develop.txt --full-report || test '$(RUN_TYPE)' == 'normal' || test '$(RUN_TYPE)' == 'scheduled' || exit 1
 	safety check --policy-file $(safety_install_policy_file) -r minimum-constraints-install.txt --full-report || test '$(RUN_TYPE)' == 'normal' || exit 1
 	@echo "Makefile: $@ done."
@@ -430,7 +433,7 @@ safety: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(safety_deve
 bandit: $(done_dir)/bandit_$(pymn)_$(PACKAGE_LEVEL).done
 	@echo "Makefile: $@ done."
 
-$(done_dir)/bandit_$(pymn)_$(PACKAGE_LEVEL).done: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(bandit_rc_file) $(check_py_files)
+$(done_dir)/bandit_$(pymn)_$(PACKAGE_LEVEL).done: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(bandit_rc_file) $(check_py_files)
 	@echo "Makefile: Running Bandit"
 	rm -f $@
 	bandit -c $(bandit_rc_file) -l -r $(python_package_name)
@@ -449,7 +452,7 @@ functiontest: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_fil
 	coverage html
 	@echo "Makefile: $@ done."
 
-{%- if cookiecutter.with_install_test == "Yes" %}
+{% if cookiecutter.with_install_test == "Yes" %}
 .PHONY: installtest
 installtest: $(bdist_file) $(sdist_file) $(test_dir)/install/test_install.sh
 ifeq ($(PLATFORM),Windows_native)
@@ -461,8 +464,8 @@ else
 endif
 	@echo "Makefile: $@ done."
 
-{%- endif %}
-{%- if cookiecutter.with_end2end_test == "Yes" %}
+{% endif %}
+{% if cookiecutter.with_end2end_test == "Yes" %}
 .PHONY:	end2end
 end2end: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $(test_end2end_py_files) $(coverage_config_file)
 	rm -f end2end.log
@@ -471,29 +474,29 @@ end2end: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(package_py_files) $
 	tools/check_blanked.py --accept-null end2end.log
 	@echo "Makefile: $@ done."
 
-{%- endif %}
+{% endif %}
 .PHONY: build
 build: $(bdist_file) $(sdist_file)
 	@echo "Makefile: $@ done."
 
-$(sdist_file): Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(dist_dependent_files)
+$(sdist_file): $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(dist_dependent_files)
 	@echo "Makefile: Building the source distribution archive: $(sdist_file)"
 	$(PYTHON_CMD) -m build --no-isolation --sdist --outdir $(dist_dir) .
 	ls -l $(sdist_file) || ls -l $(dist_dir) && echo package_level=$(package_level) && $(PYTHON_CMD) -m setuptools_scm
 	@echo "Makefile: Done building the source distribution archive: $(sdist_file)"
 
-$(bdist_file) $(version_file): Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(dist_dependent_files)
+$(bdist_file) $(version_file): $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(dist_dependent_files)
 	@echo "Makefile: Building the wheel distribution archive: $(bdist_file)"
 	$(PYTHON_CMD) -m build --no-isolation --wheel --outdir $(dist_dir) -C--universal .
 	ls -l $(bdist_file) $(version_file) || ls -l $(dist_dir) && echo package_level=$(package_level) && $(PYTHON_CMD) -m setuptools_scm
 	@echo "Makefile: Done building the wheel distribution archive: $(bdist_file)"
 
-{%- if cookiecutter.with_readthedocs == "Yes" %}
+{% if cookiecutter.with_readthedocs == "Yes" %}
 .PHONY: builddoc
 builddoc: $(doc_build_dir)/html/docs/index.html
 	@echo "Makefile: $@ done."
 
-$(doc_build_dir)/html/docs/index.html: Makefile $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(doc_dependent_files)
+$(doc_build_dir)/html/docs/index.html: $(done_dir)/develop_$(pymn)_$(PACKAGE_LEVEL).done $(doc_dependent_files)
 	@echo "Makefile: Running Sphinx to create HTML pages"
 	rm -f $@
 	$(doc_cmd) -b html $(doc_opts) $(doc_build_dir)/html
@@ -509,7 +512,7 @@ doclinkcheck: $(doc_dependent_files)
 	@echo "Makefile: Look for any errors in the above output or in: $(doc_build_dir)/linkcheck/output.txt"
 	@echo "Makefile: $@ done."
 
-{%- endif %}
+{% endif %}
 .PHONY: authors
 authors: AUTHORS.md
 	@echo "Makefile: $@ done."

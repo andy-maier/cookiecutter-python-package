@@ -56,7 +56,7 @@ Setting up the development environment
    displays a list of valid Make targets and a short description of what each
    target does.
 
-.. _virtual Python environment: https://docs.python-guide.org/en/latest/dev/virtualenvs/
+.. _virtual Python environment: https://docs.python-guide.org/dev/virtualenvs/
 
 
 .. _`Building the documentation`:
@@ -517,7 +517,7 @@ Git repo.
     the same version twice to PyPI.
 
     Verify that the released version arrived on PyPI at
-    https://pypi.python.org/pypi/{[ cookiecutter.pypi_package_name ]}/
+    https://pypi.org/{[ cookiecutter.pypi_package_name ]}/
 
 
 Starting a new version

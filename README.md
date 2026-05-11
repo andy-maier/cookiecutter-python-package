@@ -2,9 +2,10 @@
 
 [![Version on Pypi](https://img.shields.io/pypi/v/zhmcclient.svg)](https://pypi.python.org/pypi/{[ cookiecutter.pypi_package_name ]}/)
 [![Test status (main)](https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/actions/workflows/test.yml?query=branch%3Amaster)
+{%- if cookiecutter.with_readthedocs == "Yes" %}
 [![Docs status (main)](https://readthedocs.org/projects/python-zhmcclient/badge/?version=latest)](https://readthedocs.org/projects/python-zhmcclient/builds/)
+{%- endif %}
 [![Test coverage (main)](https://coveralls.io/repos/github/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/badge.svg?branch=main)](https://coveralls.io/github/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}?branch=main)
-[![CodeClimate status](https://codeclimate.com/github/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]}/badges/gpa.svg)](https://codeclimate.com/github/{[ cookiecutter.github_org ]}/{[ cookiecutter.github_repo ]})
 
 # Overview
 
@@ -31,23 +32,31 @@ pipx install {[ cookiecutter.pypi_package_name ]}
 
 This will also install any prerequisite Python packages.
 
+{%- if cookiecutter.with_readthedocs == "Yes" %}
 For more details and alternative ways to install, see
 [Installation](https://<readthedocs_name>.readthedocs.io/en/stable/intro.html#installation).
 
+{%- endif %}
 # Documentation
 
+{%- if cookiecutter.with_readthedocs == "Yes" %}
 * [Documentation](https://<readthedocs_name>.readthedocs.io/en/stable/>)
 
 # Change History
 
 * [Change history](https://<readthedocs_name>.readthedocs.io/en/stable/changes.html)
+{%- else %}
+TODO: Write short documentation here.
+{%- endif %}
 
+{%- if cookiecutter.with_readthedocs == "Yes" %}
 # Contributing
 
 For information on how to contribute to the
 {[ cookiecutter.project_name ]} project, see
 [Contributing](https://<readthedocs_name>.readthedocs.io/en/stable/development.html#contributing).
 
+{%- endif %}
 # License
 
 The {[ cookiecutter.project_name ]} project is provided under the
