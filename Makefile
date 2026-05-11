@@ -299,9 +299,11 @@ all: install develop flake8 ruff pylint check_reqs safety bandit unittest functi
 
 .PHONY: test
 test: unittest functiontest
+	@echo "Makefile: $@ done."
 
 .PHONY: check
 check: flake8 ruff pylint
+	@echo "Makefile: $@ done."
 
 .PHONY: platform
 platform:
