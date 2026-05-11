@@ -9,11 +9,11 @@
 # Base dependencies.
 # Must be consistent with requirements-base.txt and build-system.requires in pyproject.toml.
 
-pip==26.0
-setuptools==78.1.1
+pip==26.0.1
+setuptools==82.0.1
 # Note on not specifying 'setuptools-scm[toml]': Extras cannot be in constraints files
-setuptools-scm==9.2.0
-wheel==0.46.2
+setuptools-scm==9.2.2
+wheel==0.47.0
 
 
 # ------------------------------------------------------------------------------
